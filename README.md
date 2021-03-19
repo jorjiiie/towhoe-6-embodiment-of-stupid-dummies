@@ -1,4 +1,4 @@
-![Towhoe Banner](https://raw.githubusercontent.com/theokrueger/towhoe-6-embodiment-of-stupid-dummies/main/banner.png)
+![Towhoe Banner](https://github.com/theokrueger/towhoe-6-embodiment-of-stupid-dummies/blob/main/banner.png?raw=true)
 
 Towhoe 6: EOSD is a complete ripoff of the bullet hell game [Touhou 6: Embodiment of Scarlet Devil](https://en.touhouwiki.net/wiki/Embodiment_of_Scarlet_Devil).
 
