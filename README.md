@@ -6,8 +6,11 @@ It is a vertical-scrolling bullet hell (danmaku) shooter, basically its Galaga.
 
 # How to play
 Launch the game and click the buttons to start and learn idiot
+
 z - shoot gun
+
 x - use bomb (big ability)
+
 left shift - focus mode (move slower, tighter bullet spread, reveal hitbox)
 
 # Credits
