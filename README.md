@@ -15,5 +15,7 @@ left shift - focus mode (move slower, tighter bullet spread, reveal hitbox)
 
 # Credits
 Ryan - carrying the group
+
 Theo - doing something I dunno
+
 Eric - hopefully actually in the group
