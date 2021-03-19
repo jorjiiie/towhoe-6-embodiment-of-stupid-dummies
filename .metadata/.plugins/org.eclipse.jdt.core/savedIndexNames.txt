@@ -1,2 +1,0 @@
-INDEX VERSION 1.131+/home/theo/Documents/GitHub/towhoe-6-embodiment-of-stupid-dummies/.metadata/.plugins/org.eclipse.jdt.core
-3755067068.index
