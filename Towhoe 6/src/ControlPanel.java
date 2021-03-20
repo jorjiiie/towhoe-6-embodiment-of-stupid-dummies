@@ -61,6 +61,7 @@ public class ControlPanel extends JPanel
        game.startGame();
 			 gStats.update(0);
     	 gStats.repaint();       
+
       }
     }
     else if(button == pauseButton)
