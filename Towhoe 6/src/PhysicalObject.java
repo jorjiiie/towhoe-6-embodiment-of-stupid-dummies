@@ -34,8 +34,9 @@ public abstract class PhysicalObject {
 		// distance between two objects
 		return Math.sqrt((this.xPos-o.xPos)*(this.xPos-o.xPos)+(this.yPos-o.yPos)*(this.yPos-o.yPos));
 	}
-	void move() {
+	public void move() {
 		// no clipping on borders (yet)
+		System.out.println(xPos + " " + yPos + " " + xVel + " " + yVel);
 		xPos+=xVel;
 		yPos+=yVel; 
 	}
@@ -56,6 +57,12 @@ public abstract class PhysicalObject {
 	}
 	public int getY() {
 		return yPos;
+	}
+	public int getYVelocity() {
+		return yVel;
+	}
+	public int getXVelocity() {
+		return xVel;
 	}
 	public abstract void draw(Graphics g);
 }

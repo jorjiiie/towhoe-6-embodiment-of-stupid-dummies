@@ -23,25 +23,34 @@ public class Player extends PhysicalObject implements Ship {
 
 	}
 	public void goUp() {
-		super.setYVelocity(1); 
+		super.setYVelocity(-SPEED); 
 	}
 	public void goDown() {
-		super.setYVelocity(-1);
+		super.setYVelocity(SPEED);
 	}
 	public void goRight() {
-		super.setXVelocity(1);
+		super.setXVelocity(SPEED);
 	}
 	public void goLeft() {
-		super.setXVelocity(-1);
+		super.setXVelocity(-SPEED);
 	}
 	public boolean loseLife() {
 		lives--;
 		return lives==0;
 	}
-
-
+	public void stopX() {
+		super.setXVelocity(0);
+	}
+	public void stopY() {
+		super.setYVelocity(0);
+	}
+	public void move() {
+		System.out.println("joe");
+		super.move();
+	}
 	public void draw(Graphics g){
 		g.setColor(Color.RED);
+		System.out.println("FUCK YOU");
 		g.fillOval(super.getX(),super.getY(),15,15);
 	}
 }
