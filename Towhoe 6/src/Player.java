@@ -11,12 +11,18 @@ public class Player extends PhysicalObject implements Ship {
 		// initial velocity is [0,0]
 		// initial position is middle of panel so we pass that in
 		super(x,y,0,0,15); // radius for now? i have no idea
+		bullets = new ArrayList<Bullet>();
+		initBullets();
 	}
 	public ArrayList<Bullet> shoot() {
+		ArrayList<Bullet> j = new ArrayList<Bullet>(); // for now LOL
+		j.add(new Bullet(super.getX(),super.getY(),0,-10,5));
 		// we'll implement a global list of bullets so it's simpler to check yadayada
-		return bullets;
+		return j;
 	}
-		
+	public void initBullets() {
+		// for now LOL
+	}
 	public void moveUp() {
 		super.setYVelocity(-SPEED); 
 	}
@@ -42,12 +48,12 @@ public class Player extends PhysicalObject implements Ship {
 		super.setYVelocity(0);
 	}
 	public void move() {
-		System.out.println("joe"); // mama
+		// System.out.println("joe"); // mama
 		super.move();
 	}
 	public void draw(Graphics g){
 		g.setColor(Color.RED);
-		System.out.println("FUCK YOU");
-		g.fillOval(super.getX(),super.getY(),15,15);
+		// System.out.println("FUCK YOU");
+		g.fillOval(super.getX(),super.getY(),super.getRadius(),super.getRadius());
 	}
 }

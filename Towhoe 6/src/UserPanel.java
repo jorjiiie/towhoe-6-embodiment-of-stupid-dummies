@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*; 	
 import java.awt.event.*;
 import java.util.ArrayList;
-
+import java.util.List;
 public class UserPanel extends JPanel implements KeyListener, ActionListener, JavaArcade {
 	
 	private Player player; // player
@@ -11,6 +11,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	private javax.swing.Timer timer; // draw rate 
 	private ArrayList<Enemy> enemies; // enemies as arraylist
 	
+	private List<Bullet> player_bullets, enemy_bullets;
 	// THE BIG OL CONSTRUCTOR
 	public UserPanel(int width, int height) {
    
@@ -29,6 +30,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		setBackground(background);
 	   
 	    setPreferredSize(new Dimension(width, height));
+	   player_bullets = new ArrayList<Bullet>();
 	}
 	
 	public void actionPerformed (ActionEvent e){ // draw those mf frames
@@ -54,6 +56,12 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 				break;
 		}
 	}
+	public void playerShoot() {
+		System.out.println("hi");
+		for (Bullet b : player.shoot()) {
+			player_bullets.add(b);
+		}
+	}
 	public void keyPressed(KeyEvent e) { // the one that matters
 		switch(e.getKeyCode()) {
 		// TODO add all the keys and alpabetize for fun
@@ -71,7 +79,10 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 				player.moveDown();
 				break;
 			case KeyEvent.VK_Z:
-				player.shoot();
+				playerShoot();
+				break;
+			case KeyEvent.VK_SPACE:
+				playerShoot();
 				break;
 				/* TODO Implement bombs
 			case KeyEvent.VK_X:
@@ -96,6 +107,11 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		super.paintComponent(g); // the important one keep this first
 		player.move();
 		player.draw(g);
+		for (Bullet b : player_bullets) {
+			b.move();
+			// System.out.println(" BULLET AT " + b.getX() + " " + b.getY());
+			b.draw(g);
+		}
 	}  
 
 	//TODO FIGURE OUT WTF TO DO WITH THIS
