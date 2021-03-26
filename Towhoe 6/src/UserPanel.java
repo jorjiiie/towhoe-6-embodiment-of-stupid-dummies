@@ -40,11 +40,36 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	public void keyReleased(KeyEvent e) {}
 	public void keyPressed(KeyEvent e) { // the one that matters
 		switch(e.getKeyCode()) {
-		// TODO add all the keys
-			case KeyEvent.VK_ENTER: // template
-				// do a thing
-				break;
-			default:
+		// TODO add all the keys and alpabetize for fun
+		case KeyEvent.VK_LEFT:
+			player.moveLeft();
+			break;
+		case KeyEvent.VK_RIGHT:
+			player.moveRight();
+			break;
+		case KeyEvent.VK_UP:
+			player.moveUp();
+			break;
+		case KeyEvent.VK_DOWN:
+			player.moveDown();
+			break;
+		case KeyEvent.VK_Z:
+			player.shoot();
+			break;
+			/* TODO Implement bombs
+		case KeyEvent.VK_X:
+			player.bomb();
+			break;
+			*/
+			/* TODO Implement focus ?
+		case KeyEvent.VK_SHIFT:
+			player.shoot();
+			break;
+			*/
+		case KeyEvent.VK_ENTER: 
+			// TODO start the game i guess
+			break;
+		default:
        }
 	}
 
