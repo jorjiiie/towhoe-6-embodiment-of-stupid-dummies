@@ -11,16 +11,18 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	private javax.swing.Timer timer; // draw rate 
 	private ArrayList<Enemy> enemies; // enemies as arraylist
 	
+	private boolean up,down,right,left; // isPressed
 	// THE BIG OL CONSTRUCTOR
 	public UserPanel(int width, int height) {
    
 		Color background = Color.black; // fallback, image bg pls
 		score = 0;
 		
-		player = new Player(width, height); // TODO  add/fix args pls
+		player = new Player(width/2, height/2); // TODO  add/fix args pls
 		
 		timer = new javax.swing.Timer(16, this); // 16 ms per frame frame rate = ~60, this will stutter a lot noticeably but who cares
 		
+		timer.start();
 		addKeyListener(this);//used for key controls
 
 		setFocusable(true);
@@ -31,52 +33,92 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	}
 	
 	public void actionPerformed (ActionEvent e){ // draw those mf frames
-		checkStats();
+		// checkStats();
 		repaint();
 	}
 
 	// we only care about holding da key , stop actions on release
 	public void keyTyped(KeyEvent e) {}
-	public void keyReleased(KeyEvent e) {}
+		public void keyReleased(KeyEvent e) {
+		switch (e.getKeyCode()) {
+			case KeyEvent.VK_LEFT:
+				if (!right)
+					player.stopX();
+				else 
+					player.moveRight();
+				left = false;
+				break;
+			case KeyEvent.VK_RIGHT:
+				if (!left)
+					player.stopX();
+				else
+					player.moveLeft();
+				right = false;
+				break;
+			case KeyEvent.VK_UP:
+				if (!down)
+					player.stopY();
+				else
+					player.moveDown();
+				up = false;
+				break;
+			case KeyEvent.VK_DOWN:
+				if (!up)
+					player.stopY();
+				else
+					player.moveUp();
+				down = false;
+				break;
+				
+		}
+	}
 	public void keyPressed(KeyEvent e) { // the one that matters
+		System.out.println("hi");
 		switch(e.getKeyCode()) {
 		// TODO add all the keys and alpabetize for fun
-		case KeyEvent.VK_LEFT:
-			player.moveLeft();
-			break;
-		case KeyEvent.VK_RIGHT:
-			player.moveRight();
-			break;
-		case KeyEvent.VK_UP:
-			player.moveUp();
-			break;
-		case KeyEvent.VK_DOWN:
-			player.moveDown();
-			break;
-		case KeyEvent.VK_Z:
-			player.shoot();
-			break;
-			/* TODO Implement bombs
-		case KeyEvent.VK_X:
-			player.bomb();
-			break;
-			*/
-			/* TODO Implement focus ?
-		case KeyEvent.VK_SHIFT:
-			player.shoot();
-			break;
-			*/
-		case KeyEvent.VK_ENTER: 
-			// TODO start the game i guess
-			break;
-		default:
-       }
+
+			case KeyEvent.VK_LEFT:
+				player.moveLeft();
+				left = true;
+				break;
+			case KeyEvent.VK_RIGHT:
+				player.moveRight();
+				right = true;
+				break;
+			case KeyEvent.VK_UP:
+				player.moveUp();
+				up = true;
+				break;
+			case KeyEvent.VK_DOWN:
+				player.moveDown();
+				down = true;
+				break;
+			case KeyEvent.VK_Z:
+				player.shoot();
+				break;
+				/* TODO Implement bombs
+			case KeyEvent.VK_X:
+				player.bomb();
+				break;
+				*/
+				/* TODO Implement focus ?
+			case KeyEvent.VK_SHIFT:
+				player.shoot();
+				break;
+				*/
+			case KeyEvent.VK_ENTER: 
+				// TODO start the game i guess
+				break;
+			default:
+  	 }
 	}
 
 	// draws stuff
 	public void paintComponent(Graphics g){
 		// TODO add for loop for all enemies, collision checks, player , etc etc etc
 		super.paintComponent(g); // the important one keep this first
+		player.move();
+		player.draw(g);
 	}  
 
 	//TODO FIGURE OUT WTF TO DO WITH THIS
