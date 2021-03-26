@@ -18,8 +18,11 @@ public class Bullet extends PhysicalObject {
 		super.move();
 		if (super.getX() < 0 || super.getY() < 0) {
 			// destroy?
+			System.out.println("deactivate");
 			active = false;
 		}
-
+	}
+	public boolean getActive() {
+		return active;
 	}
 }

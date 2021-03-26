@@ -3,6 +3,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Iterator;
 public class UserPanel extends JPanel implements KeyListener, ActionListener, JavaArcade {
 	
 	private Player player; // player
@@ -11,7 +15,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	private javax.swing.Timer timer; // draw rate 
 	private ArrayList<Enemy> enemies; // enemies as arraylist
 	
-	private List<Bullet> player_bullets, enemy_bullets;
+	private Set<Bullet> player_bullets, enemy_bullets;
 	// THE BIG OL CONSTRUCTOR
 	public UserPanel(int width, int height) {
    
@@ -30,7 +34,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		setBackground(background);
 	   
 	    setPreferredSize(new Dimension(width, height));
-	   player_bullets = new ArrayList<Bullet>();
+	   player_bullets = new HashSet<Bullet>();
 	}
 	
 	public void actionPerformed (ActionEvent e){ // draw those mf frames
@@ -57,7 +61,6 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		}
 	}
 	public void playerShoot() {
-		System.out.println("hi");
 		for (Bullet b : player.shoot()) {
 			player_bullets.add(b);
 		}
@@ -107,10 +110,15 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		super.paintComponent(g); // the important one keep this first
 		player.move();
 		player.draw(g);
-		for (Bullet b : player_bullets) {
-			b.move();
-			// System.out.println(" BULLET AT " + b.getX() + " " + b.getY());
-			b.draw(g);
+		for (Iterator<Bullet> i = player_bullets.iterator(); i.hasNext();) {
+			Bullet b = i.next();
+			if (b.getActive()) {
+				b.move();
+				// System.out.println(" BULLET AT " + b.getX() + " " + b.getY());				
+				b.draw(g);
+			} else {
+				i.remove();
+			}
 		}
 	}  
 
