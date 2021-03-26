@@ -6,17 +6,19 @@ import javax.swing.border.EmptyBorder;
 
 public class Towhoe extends JFrame
 {
+  public static final int GAME_WIDTH = 400;
+  public static final int GAME_HEIGHT = 300;
   public Towhoe()
   {
-    super("Towhoe 6 Embodiment of Stupid Dummies");
+    super("Towhoe 6: Embodiment of Stupid Dummies");
 
-    JavaArcade game = new UserPanel(600, 450);
+    JavaArcade game = new UserPanel(GAME_WIDTH, GAME_HEIGHT);
 
-    GameStats display = new GameStats(game); //passing in a JavaArcade, therefore I know I can call getHighScore(), getScore()
+    GameStats display = new GameStats(game); // passing in a JavaArcade, therefore I know I can call getHighScore(), getScore()
 		
-    ControlPanel controls = new ControlPanel(game, display); //Also passing in JavaArcade to ControlPanel, I know you will respond to buttons
+    ControlPanel controls = new ControlPanel(game, display); // Also passing in JavaArcade to ControlPanel, I know you will respond to buttons
     
-    game.setDisplay(display); //provides game ability to update display
+    game.setDisplay(display); // provides game ability to update display
     
     JPanel panel = new JPanel();
     panel.setLayout(new BorderLayout());
@@ -34,6 +36,7 @@ public class Towhoe extends JFrame
     Towhoe window = new Towhoe();
     window.setBounds(100, 100, 600, 600);
     window.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    window.setResizable(false); // THIS ONE IS IMPORTANT
     window.setVisible(true);
   }
 }

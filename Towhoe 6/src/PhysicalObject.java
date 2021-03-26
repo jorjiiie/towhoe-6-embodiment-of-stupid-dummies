@@ -12,14 +12,17 @@ public abstract class PhysicalObject {
 	//(x,y) position with [x,y] vector
 	int hitboxRadius;
 	// all hitboxes are circles for simplicity 
+	// AND ITS MORE FUN THAT WAY !!!! -theo
 
 	Image sprite; // not sure how this is going to work for nwo
 	public PhysicalObject() {
 		// no params spawn in at 0,0 with [0,0]
-		xPos=yPos=xVel=yVel=hitboxRadius=0;
+		// TODO spawn at a good spot
+		xPos=yPos=xVel=yVel=hitboxRadius=0; // fun
 	}
 	public PhysicalObject(int xPos, int yPos, int xVel, int yVel, int hitboxRadius) {
 		// (xPos,yPos) [xVel,yVel]
+		// fun stuff
 		this.xPos=xPos;
 		this.yPos=yPos;
 		this.xVel=xVel;
@@ -30,27 +33,31 @@ public abstract class PhysicalObject {
 		// if distance < sum of radii, then intersect
 		return distance(o) < this.hitboxRadius + o.hitboxRadius;	
 	}
-	public double distance(PhysicalObject o) {
+	public double distance(PhysicalObject o) { // as of now doesnt need to be a separate method but it could be cool to use it later i guess
 		// distance between two objects
-		return Math.sqrt((this.xPos-o.xPos)*(this.xPos-o.xPos)+(this.yPos-o.yPos)*(this.yPos-o.yPos));
+		return Math.sqrt((this.xPos-o.xPos)*(this.xPos-o.xPos)+(this.yPos-o.yPos)*(this.yPos-o.yPos)); // fun
 	}
 	public void move() {
-		// no clipping on borders (yet)
-		System.out.println(xPos + " " + yPos + " " + xVel + " " + yVel);
-		xPos+=xVel;
-		yPos+=yVel; 
+		// System.out.println(xPos + " " + yPos + " " + xVel + " " + yVel); // DEBUG
+		xPos = clamp(xPos+xVel, 0, Towhoe.GAME_WIDTH);;
+		yPos = clamp(yPos+yVel, 0, Towhoe.GAME_HEIGHT);;
+		
 	}
-	public void updYVelocity(int x) {
-		yVel+=x;
+	public int clamp(int x, int min, int max) { // for the border clipping
+		return Math.min(Math.max(x, min), max);
 	}
-	public void updXVelocity(int x) {
-		xVel+=x;
+	// mutators & accessors
+	public void updYVelocity(int vel) {
+		yVel+=vel;
 	}
-	public void setYVelocity(int x) {
-		yVel = x;
+	public void updXVelocity(int vel) {
+		xVel+=vel;
 	}
-	public void setXVelocity(int x) {
-		xVel = x;
+	public void setYVelocity(int vel) {
+		yVel = vel;
+	}
+	public void setXVelocity(int vel) {
+		xVel = vel;
 	}
 	public int getX() {
 		return xPos;
@@ -64,5 +71,6 @@ public abstract class PhysicalObject {
 	public int getXVelocity() {
 		return xVel;
 	}
+	// is this really needed (probably)
 	public abstract void draw(Graphics g);
 }

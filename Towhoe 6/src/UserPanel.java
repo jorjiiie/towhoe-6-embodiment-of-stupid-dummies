@@ -42,18 +42,9 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_LEFT:
-				if (!right)
-					player.stopX();
-				else 
-					player.moveRight();
-				left = false;
+				
 				break;
 			case KeyEvent.VK_RIGHT:
-				if (!left)
-					player.stopX();
-				else
-					player.moveLeft();
-				right = false;
 				break;
 			case KeyEvent.VK_UP:
 				if (!down)
@@ -79,19 +70,15 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 			case KeyEvent.VK_LEFT:
 				player.moveLeft();
-				left = true;
 				break;
 			case KeyEvent.VK_RIGHT:
 				player.moveRight();
-				right = true;
 				break;
 			case KeyEvent.VK_UP:
 				player.moveUp();
-				up = true;
 				break;
 			case KeyEvent.VK_DOWN:
 				player.moveDown();
-				down = true;
 				break;
 			case KeyEvent.VK_Z:
 				player.shoot();
