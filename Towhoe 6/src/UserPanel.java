@@ -11,7 +11,6 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	private javax.swing.Timer timer; // draw rate 
 	private ArrayList<Enemy> enemies; // enemies as arraylist
 	
-	private boolean up,down,right,left; // isPressed
 	// THE BIG OL CONSTRUCTOR
 	public UserPanel(int width, int height) {
    
@@ -42,29 +41,20 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_LEFT:
-				
+				if(player.getXVelocity()==player.SPEED*-1) player.stopX();
 				break;
 			case KeyEvent.VK_RIGHT:
+				if(player.getXVelocity()==player.SPEED) player.stopX();
 				break;
 			case KeyEvent.VK_UP:
-				if (!down)
-					player.stopY();
-				else
-					player.moveDown();
-				up = false;
+				if(player.getYVelocity()==player.SPEED*-1) player.stopY();
 				break;
 			case KeyEvent.VK_DOWN:
-				if (!up)
-					player.stopY();
-				else
-					player.moveUp();
-				down = false;
+				if(player.getYVelocity()==player.SPEED) player.stopY();
 				break;
-				
 		}
 	}
 	public void keyPressed(KeyEvent e) { // the one that matters
-		System.out.println("hi");
 		switch(e.getKeyCode()) {
 		// TODO add all the keys and alpabetize for fun
 

@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.awt.*;
 
 public class Player extends PhysicalObject implements Ship {
-	public static final int SPEED = 5; // pixels/frame or pixels/sec if its too fast but i think it's ok
-	private int lives = 5;
-	private int pLevel = 0;
-	private int xp=0;
+	public static final int SPEED = 3; // pixels/frame or pixels/sec if its too fast but i think it's ok
+	private int lives = 5; // TODO turn into coin maybe
+	private int pLevel = 0; // TODO add this to how shoot works
+	private int xp=0; // TODO add this when item collision or osmething asdlkajsdl
 	private ArrayList<Bullet> bullets;
 	public Player(int x, int y) {
 		// initial velocity is [0,0]
@@ -16,15 +16,7 @@ public class Player extends PhysicalObject implements Ship {
 		// we'll implement a global list of bullets so it's simpler to check yadayada
 		return bullets;
 	}
-	// use these for power pickups if possible
-	public void levelUp() {
-
-	}
-	public void addXp() {
-
-	}
-	// ------------------
-	
+		
 	public void moveUp() {
 		super.setYVelocity(-SPEED); 
 	}

@@ -4,12 +4,12 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.border.EmptyBorder;
 
-public class Towhoe extends JFrame
-{
+public class Towhoe extends JFrame {
+  // IMPORTANT FINALS
   public static final int GAME_WIDTH = 400;
   public static final int GAME_HEIGHT = 300;
-  public Towhoe()
-  {
+
+  public Towhoe() {
     super("Towhoe 6: Embodiment of Stupid Dummies");
 
     JavaArcade game = new UserPanel(GAME_WIDTH, GAME_HEIGHT);
@@ -31,8 +31,7 @@ public class Towhoe extends JFrame
     c.add(panel, BorderLayout.CENTER);
   }
 
-  public static void main(String[] args)
-  {
+  public static void main(String[] args) {
     Towhoe window = new Towhoe();
     window.setBounds(100, 100, 600, 600);
     window.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -47,7 +47,7 @@ public abstract class PhysicalObject {
 		return Math.min(Math.max(x, min), max);
 	}
 	// mutators & accessors
-	public void updYVelocity(int vel) {
+	public void updYVelocity(int vel) { // upd = update (im an idiot)
 		yVel+=vel;
 	}
 	public void updXVelocity(int vel) {
