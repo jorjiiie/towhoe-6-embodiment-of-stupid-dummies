@@ -1,9 +1,18 @@
+/*
+ Everything that is a physical object (capable of interaction) will implement this class
+
+*/
+import java.awt.*;
+
+
 import java.awt.Image;
 
 public abstract class PhysicalObject {
 	int xPos, yPos, xVel, yVel; 
 	//(x,y) position with [x,y] vector
 	int hitboxRadius;
+	// all hitboxes are circles for simplicity 
+
 	Image sprite; // not sure how this is going to work for nwo
 	public PhysicalObject() {
 		// no params spawn in at 0,0 with [0,0]
@@ -30,5 +39,23 @@ public abstract class PhysicalObject {
 		xPos+=xVel;
 		yPos+=yVel; 
 	}
-	public abstract void draw();
+	public void updYVelocity(int x) {
+		yVel+=x;
+	}
+	public void updXVelocity(int x) {
+		xVel+=x;
+	}
+	public void setYVelocity(int x) {
+		yVel = x;
+	}
+	public void setXVelocity(int x) {
+		xVel = x;
+	}
+	public int getX() {
+		return xPos;
+	}
+	public int getY() {
+		return yPos;
+	}
+	public abstract void draw(Graphics g);
 }
