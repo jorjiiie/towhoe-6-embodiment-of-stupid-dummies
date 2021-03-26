@@ -16,28 +16,33 @@ public class Player extends PhysicalObject implements Ship {
 		// we'll implement a global list of bullets so it's simpler to check yadayada
 		return bullets;
 	}
+	// use these for power pickups if possible
 	public void levelUp() {
 
 	}
 	public void addXp() {
 
 	}
-	public void goUp() {
+	// ------------------
+	
+	public void moveUp() {
 		super.setYVelocity(-SPEED); 
 	}
-	public void goDown() {
+	public void moveDown() {
 		super.setYVelocity(SPEED);
 	}
-	public void goRight() {
+	public void moveRight() {
 		super.setXVelocity(SPEED);
 	}
-	public void goLeft() {
+	public void moveLeft() {
 		super.setXVelocity(-SPEED);
 	}
+	// coin system more so than lives since its arcade imo
 	public boolean loseLife() {
 		lives--;
 		return lives==0;
 	}
+	// bad
 	public void stopX() {
 		super.setXVelocity(0);
 	}
@@ -45,7 +50,7 @@ public class Player extends PhysicalObject implements Ship {
 		super.setYVelocity(0);
 	}
 	public void move() {
-		System.out.println("joe");
+		System.out.println("joe"); // mama
 		super.move();
 	}
 	public void draw(Graphics g){
