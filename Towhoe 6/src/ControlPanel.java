@@ -46,8 +46,7 @@ public class ControlPanel extends JPanel
   }
 
   // Called when the start button is clicked
-  public void actionPerformed(ActionEvent e)
-  {
+  public void actionPerformed(ActionEvent e) {
   	 
     JButton button = (JButton)e.getSource();
 
