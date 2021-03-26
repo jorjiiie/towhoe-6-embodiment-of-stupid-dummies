@@ -39,10 +39,10 @@ public abstract class PhysicalObject {
 	}
 	public void move() {
 		// System.out.println(xPos + " " + yPos + " " + xVel + " " + yVel); // DEBUG
-		xPos = clamp(xPos+xVel, 0, Towhoe.GAME_WIDTH);
-		yPos = clamp(yPos+yVel, 0, Towhoe.GAME_HEIGHT);
-		
+		xPos+=xVel;
+		yPos+=yVel;
 	}
+	// not used here but could be useful so ima just leave it here
 	public int clamp(int x, int min, int max) { // for the border clipping
 		return Math.min(Math.max(x, min), max);
 	}

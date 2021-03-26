@@ -47,10 +47,13 @@ public class Player extends PhysicalObject implements Ship {
 	public void stopY() {
 		super.setYVelocity(0);
 	}
+
+	@Override
 	public void move() {
-		// System.out.println("joe"); // mama
-		super.move();
+		xPos = clamp(xPos+xVel, 0, Towhoe.GAME_WIDTH);
+		yPos = clamp(yPos+yVel, 0, Towhoe.GAME_HEIGHT);
 	}
+}
 	public void draw(Graphics g){
 		g.setColor(Color.RED);
 		// System.out.println("FUCK YOU");
