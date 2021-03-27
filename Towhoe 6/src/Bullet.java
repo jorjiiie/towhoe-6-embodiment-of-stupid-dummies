@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.lang.Boolean;
 // TODO make this into an abstract maybe or add a field for image somewher efor other bullet types idfk
 public class Bullet extends PhysicalObject {
 	boolean active = false;
@@ -18,11 +17,7 @@ public class Bullet extends PhysicalObject {
 	public void move() {
 		// if it's too far then we destroy!
 		super.move();
-		if (isOffscreen()) {
-			// I did testing and removing it from the list is good enough for garbage collector to get to it
-			System.out.println("deactivate");
-			active = false;
-		}
+		active = !isOffscreen(); // I did testing and removing it from the list is good enough for garbage collector to get to it
 	}
 	public boolean getActive() {
 		return active;
