@@ -1,3 +1,9 @@
+/*
+the bullet is the thing that shoots other things
+author: all of us
+date: today
+*/
+
 import java.awt.*;
 
 // TODO make this into an abstract maybe or add a field for image somewher efor other bullet types idfk

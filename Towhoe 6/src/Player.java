@@ -1,3 +1,8 @@
+/*
+the player and its abilities
+author: all of us
+date: today
+*/
 import java.util.ArrayList;
 import java.awt.*;
 
@@ -17,7 +22,6 @@ public class Player extends PhysicalObject implements Ship {
 		super(x, y, 0, 0, 15); // radius for now? i have no idea
 		focus = false;
 		shooting = false;
-		initBullets();
 	}
 
 	// THE SHOOTING SECTION
@@ -33,11 +37,6 @@ public class Player extends PhysicalObject implements Ship {
 
 	public void stopShoot() {
 		shooting = false;
-	}
-
-	public void initBullets() { // TODO i dont think this function is useful or used at all
-		// for now LOL
-		// very useful function
 	}
 
 	// PLAYER MOVEMENT
@@ -67,21 +66,21 @@ public class Player extends PhysicalObject implements Ship {
 	}
 
 	public void move() {
-		xPos = super.clamp(xPos + xVel, 0, Towhoe.GAME_WIDTH); // TODO fix game borders
-		yPos = super.clamp(yPos + yVel, 0, Towhoe.GAME_HEIGHT);
+		super.setX(super.clamp(super.getX() + getXVelocity(), 0, Towhoe.GAME_WIDTH)); // TODO fix game borders
+		super.setY(super.clamp(super.getY() + getYVelocity(), 0, Towhoe.GAME_HEIGHT));
 	}
 
 	public void focus() {
 		// immediately clamp speeds to focus speeds
-		super.setYVelocity(super.clamp(yVel, -PLAYER_FOCUS_SPEED, PLAYER_FOCUS_SPEED));
-		super.setXVelocity(super.clamp(xVel, -PLAYER_FOCUS_SPEED, PLAYER_FOCUS_SPEED));
+		super.setXVelocity(super.clamp(getXVelocity(), -PLAYER_FOCUS_SPEED, PLAYER_FOCUS_SPEED));
+		super.setYVelocity(super.clamp(getYVelocity(), -PLAYER_FOCUS_SPEED, PLAYER_FOCUS_SPEED));
 		focus = true;
 	}
 
 	public void unfocus() {
 		// TODO figure out a better way to make speed normal again or just fix my shitty parenthesis
-		super.setYVelocity((int) (yVel * (PLAYER_SPEED / PLAYER_FOCUS_SPEED * 1.0)));
-		super.setXVelocity((int) (xVel * (PLAYER_SPEED / PLAYER_FOCUS_SPEED * 1.0)));
+		super.setXVelocity((int) (getXVelocity() * (PLAYER_SPEED / PLAYER_FOCUS_SPEED * 1.0)));
+		super.setYVelocity((int) (getYVelocity() * (PLAYER_SPEED / PLAYER_FOCUS_SPEED * 1.0)));
 		focus = false;
 	}
 

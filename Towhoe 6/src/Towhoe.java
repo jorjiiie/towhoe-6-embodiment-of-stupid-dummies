@@ -1,3 +1,8 @@
+/*
+the thing you run, assembles guis and stuff
+author: all of us
+date: today
+*/
 import java.awt.Container;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;

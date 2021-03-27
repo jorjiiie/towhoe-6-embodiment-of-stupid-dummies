@@ -1,4 +1,8 @@
-// Represents a control panel for the arcade
+/*
+control panel / access panel for the arcade (insert coin etc)
+author: all of us
+date: today
+*/
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

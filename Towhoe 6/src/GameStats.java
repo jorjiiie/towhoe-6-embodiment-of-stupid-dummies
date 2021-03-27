@@ -1,4 +1,8 @@
-// Represents current Game Stats
+/*
+statistics guis and tracking
+author: all of us
+date: today
+*/
 
 import java.awt.*;
 import javax.swing.*;

@@ -1,12 +1,8 @@
-/**
- * @(#)JavaArcade.java
- *
- * All games must implement this interface to be compatible
- * with the Java arcade.
- *
- * @author A. DiBenedetto
- * @version 1.00 2016/2/15
- */
+/*
+has everything the java arcade needs to interface with the other buttons
+author: all of us
+date: today
+*/
 
 public interface JavaArcade {
 

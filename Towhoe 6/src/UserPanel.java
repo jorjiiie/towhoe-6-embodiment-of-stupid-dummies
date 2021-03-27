@@ -1,3 +1,9 @@
+/*
+the actual game
+author: all of us
+date: today
+*/
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
