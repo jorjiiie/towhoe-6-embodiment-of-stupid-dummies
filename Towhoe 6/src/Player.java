@@ -2,27 +2,34 @@ import java.util.ArrayList;
 import java.awt.*;
 
 public class Player extends PhysicalObject implements Ship {
+	// TODO find comfortable values for these speeds (rip them from touhou ,, use marisa stats probably)
 	public static final int PLAYER_SPEED = 5; // pixels/frame or pixels/sec if its too fast but i think it's ok
 	public static final int PLAYER_FOCUS_SPEED = 1; // same as speed but separate speed for focus mode
 	private int lives = 5; // TODO turn into coin maybe
 	private int pLevel = 0; // TODO add this to how shoot works
 	private int xp=0; // TODO add this when item collision or osmething asdlkajsdl
-	private boolean focus;
-	private ArrayList<Bullet> bullets;
+	private boolean focus, shooting;
 	public Player(int x, int y) {
 		// initial velocity is [0,0]
 		// initial position is middle of panel so we pass that in
 		super(x,y,0,0,15); // radius for now? i have no idea
-		bullets = new ArrayList<Bullet>();
 		focus = false;
+		shooting = false;
 		initBullets();
 	}
-	public ArrayList<Bullet> shoot() {
-		ArrayList<Bullet> j = new ArrayList<Bullet>(); // for now LOL
-		j.add(new Bullet(super.getX(),super.getY(),0,-10,5));
+	// THE SHOOTING SECTION
+	public void shoot() {
+		if(shooting) Towhoe.window.getGame().addPlayerBullets(new Bullet(super.getX(),super.getY(),0,-10,5));
 		// we'll implement a global list of bullets so it's simpler to check yadayada
-		return j;
 	}
+	// we should have just made shooting static lol who cares
+	public void startShoot() {
+		shooting = true;
+	}
+	public void stopShoot() {
+		shooting = false;
+	}
+
 	public void initBullets() {
 		// for now LOL
 		// very useful function
@@ -52,9 +59,9 @@ public class Player extends PhysicalObject implements Ship {
 		super.setYVelocity(0);
 	}
 
-	@Override
+	@Override // TODO is this needed lmaoooo
 	public void move() {
-		xPos = super.clamp(xPos+xVel, 0, Towhoe.GAME_WIDTH);
+		xPos = super.clamp(xPos+xVel, 0, Towhoe.GAME_WIDTH); // TODO fix game borders
 		yPos = super.clamp(yPos+yVel, 0, Towhoe.GAME_HEIGHT);
 	}
 	public void focus() {

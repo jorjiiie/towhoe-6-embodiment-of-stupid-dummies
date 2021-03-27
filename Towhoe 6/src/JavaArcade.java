@@ -49,4 +49,5 @@ public interface JavaArcade {
   GameStats is created in Arcade, a reference should be passed to UserPanel (main panel) to update poionts */
   public void setDisplay(GameStats d);
     
+  public void addPlayerBullets(Bullet b);
 }

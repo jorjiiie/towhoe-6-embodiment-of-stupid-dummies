@@ -8,11 +8,13 @@ public class Towhoe extends JFrame {
   // IMPORTANT FINALS
   public static final int GAME_WIDTH = 400;
   public static final int GAME_HEIGHT = 300;
+  public static Towhoe window = new Towhoe();// TODO this is retarded
+  private JavaArcade game; // THIS IS HERE SO I CAN MAKE A METHOD TO RETURN THIS MF
 
   public Towhoe() {
     super("Towhoe 6: Embodiment of Stupid Dummies");
 
-    JavaArcade game = new UserPanel(GAME_WIDTH, GAME_HEIGHT);
+    game = new UserPanel(GAME_WIDTH, GAME_HEIGHT);
 
     GameStats display = new GameStats(game); // passing in a JavaArcade, therefore I know I can call getHighScore(), getScore()
 		
@@ -32,11 +34,15 @@ public class Towhoe extends JFrame {
   }
 
   public static void main(String[] args) {
-    Towhoe window = new Towhoe();
     window.setBounds(100, 100, 600, 600);
     window.setDefaultCloseOperation(EXIT_ON_CLOSE);
     window.setResizable(false); // THIS ONE IS IMPORTANT
     window.setVisible(true);
   }
-}
 
+  // TODO this is retarded
+  public JavaArcade getGame() {
+  return game;
+  }
+
+}

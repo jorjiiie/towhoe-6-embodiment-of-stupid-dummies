@@ -5,5 +5,9 @@
 
 import java.util.ArrayList;
 public interface Ship {
-	public ArrayList<Bullet> shoot();
+	public void shoot();
+	
 }
+
+// TODO ADD THIS
+//public void shoot;

@@ -2,8 +2,8 @@ import javax.swing.*;
 import java.awt.*; 	
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.LinkedList;
+// import java.util.List;
+// import java.util.LinkedList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Iterator;
@@ -15,7 +15,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	private javax.swing.Timer timer; // draw rate 
 	private ArrayList<Enemy> enemies; // enemies as arraylist
 	
-	private Set<Bullet> player_bullets, enemy_bullets;
+	private Set<Bullet> player_bullets, enemy_bullets; // separated cause player bullets only check for enemy collision and enemy bullets only check for player collision
 	// THE BIG OL CONSTRUCTOR
 	public UserPanel(int width, int height) {
    
@@ -34,11 +34,16 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		setBackground(background);
 	   
 	    setPreferredSize(new Dimension(width, height));
-	   player_bullets = new HashSet<Bullet>();
+		player_bullets = new HashSet<Bullet>();
 	}
 	
+	public void addPlayerBullets(Bullet b) {
+		player_bullets.add(b);
+	}
+
 	public void actionPerformed (ActionEvent e){ // draw those mf frames
 		// checkStats();
+		player.shoot(); // having this as what is basically a persist script is bad for performance but the amount of variable juggling we'd do anyways its worth it
 		repaint();
 	}
 
@@ -61,17 +66,14 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 			case KeyEvent.VK_SHIFT: // unfocus
 				player.unfocus();
 				break;
+			case KeyEvent.VK_Z:
+				player.stopShoot();
+				break;
 		}
 	}
-	public void playerShoot() {
-		for (Bullet b : player.shoot()) {
-			player_bullets.add(b);
-		}
-	}
+
 	public void keyPressed(KeyEvent e) { // the one that matters
 		switch(e.getKeyCode()) {
-		// TODO add all the keys and alpabetize for fun
-
 			case KeyEvent.VK_LEFT:
 				player.moveLeft();
 				break;
@@ -85,10 +87,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 				player.moveDown();
 				break;
 			case KeyEvent.VK_Z:
-				playerShoot();
-				break;
-			case KeyEvent.VK_SPACE:
-				playerShoot();
+				player.startShoot();
 				break;
 				/* TODO Implement bombs
 			case KeyEvent.VK_X:
@@ -124,7 +123,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		}
 	}  
 
-	//TODO FIGURE OUT WTF TO DO WITH THIS
+	// TODO FIGURE OUT WTF TO DO WITH THIS
 	  
 	   private void checkStats(){ //called every 5ms, checks status of targets and hero
 	   
