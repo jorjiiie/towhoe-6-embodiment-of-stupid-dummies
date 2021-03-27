@@ -115,7 +115,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 			Bullet b = i.next();
 			if (b.getActive()) {
 				b.move();
-				// System.out.println(" BULLET AT " + b.getX() + " " + b.getY());				
+				// System.out.println(" BULLET AT " + b.getX() + " " + b.getY()); // DEBUG	
 				b.draw(g);
 			} else {
 				i.remove();
