@@ -1,31 +1,36 @@
 import java.awt.*;
+
 // TODO make this into an abstract maybe or add a field for image somewher efor other bullet types idfk
 public class Bullet extends PhysicalObject {
 	boolean active = false;
+
 	public Bullet(int x, int y, int xVel, int yVel, int r) {
-		super(x,y,xVel,yVel,r);
+		super(x, y, xVel, yVel, r);
 		active = true;
 	}
+
 	public Bullet(Bullet o) {
-		super(o.getX(),o.getY(),o.getXVelocity(),o.getYVelocity(),o.getRadius());
+		super(o.getX(), o.getY(), o.getXVelocity(), o.getYVelocity(), o.getRadius());
 		active = true;
 	}
+
 	public void draw(Graphics g) {
 		g.setColor(Color.BLUE);
-		g.fillOval(super.getX(),super.getY(),super.getRadius(),super.getRadius());
+		g.fillOval(super.getX(), super.getY(), super.getRadius(), super.getRadius());
 	}
+
 	public void move() {
 		// if it's too far then we destroy!
 		super.move();
 		active = !isOffscreen(); // I did testing and removing it from the list is good enough for garbage collector to get to it
 	}
+
 	public boolean getActive() {
 		return active;
 	}
 
 	private boolean isOffscreen() {
-		return super.getY()<0 || super.getY()>Towhoe.GAME_HEIGHT || super.getX()<0 || super.getX()>Towhoe.GAME_WIDTH;
-		// i hate how boolean doesnt actually equal 1 is so annoying
+		return super.getY() < 0 || super.getY() > Towhoe.GAME_HEIGHT || super.getX() < 0 || super.getX() > Towhoe.GAME_WIDTH; // i hate how boolean doesnt actually equal 1 is so annoying
 		/*
 		map of return super.getY()<0 || super.getY()>Towhoe.GAME_HEIGHT || super.getX()<0 || super.getX()>Towhoe.GAME_WIDTH; 
 
