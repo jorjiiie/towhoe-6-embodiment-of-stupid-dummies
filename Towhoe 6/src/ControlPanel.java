@@ -46,6 +46,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 
         JButton button = (JButton) e.getSource();
 
+        // TODO fix this else if chain for being shit
         if (button == startButton) {
 
             if (!game.running()) {
@@ -56,24 +57,28 @@ public class ControlPanel extends JPanel implements ActionListener {
                 gStats.repaint();
 
             }
-        } else if (button == pauseButton) {
+        }
+        else if (button == pauseButton) {
             game.pauseGame();
             startButton.setText("Resume");
             startButton.setEnabled(true);
             repaint();
 
-        } else if (button == stopButton) {
+        }
+        else if (button == stopButton) {
             game.stopGame();
             gStats.gameOver(game.getPoints());
             gStats.repaint();
             startButton.setEnabled(true);
             startButton.setText("Restart");
             repaint();
-        } else if (button == creditsButton) {
+        }
+        else if (button == creditsButton) {
             String credits = game.getCredits();
             JOptionPane.showMessageDialog(this, credits, "Game Credits", JOptionPane.PLAIN_MESSAGE);
 
-        } else if (button == instructionsButton) {
+        }
+        else if (button == instructionsButton) {
             String instructions = game.getInstructions();
             JOptionPane.showMessageDialog(this, instructions, "Game Rules", JOptionPane.PLAIN_MESSAGE);
 
