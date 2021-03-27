@@ -27,7 +27,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		timer = new javax.swing.Timer(16, this); // 16 ms per frame frame rate = ~60, this will stutter a lot noticeably but who cares
 		
 		timer.start();
-		addKeyListener(this);//used for key controls
+		addKeyListener(this); // used for key controls
 
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);      
@@ -47,16 +47,19 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_LEFT:
-				if(player.getXVelocity()==player.SPEED*-1) player.stopX();
+				if(player.getXVelocity() < 0) player.stopX();
 				break;
 			case KeyEvent.VK_RIGHT:
-				if(player.getXVelocity()==player.SPEED) player.stopX();
+				if(player.getXVelocity() > 0) player.stopX();
 				break;
 			case KeyEvent.VK_UP:
-				if(player.getYVelocity()==player.SPEED*-1) player.stopY();
+				if(player.getYVelocity() < 0) player.stopY();
 				break;
 			case KeyEvent.VK_DOWN:
-				if(player.getYVelocity()==player.SPEED) player.stopY();
+				if(player.getYVelocity() > 0) player.stopY();
+				break;
+			case KeyEvent.VK_SHIFT: // unfocus
+				player.unfocus();
 				break;
 		}
 	}
@@ -92,11 +95,10 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 				player.bomb();
 				break;
 				*/
-				/* TODO Implement focus ?
-			case KeyEvent.VK_SHIFT:
-				player.shoot();
+			case KeyEvent.VK_SHIFT: // focus mode
+				player.focus();
 				break;
-				*/
+
 			case KeyEvent.VK_ENTER: 
 				// TODO start the game i guess
 				break;

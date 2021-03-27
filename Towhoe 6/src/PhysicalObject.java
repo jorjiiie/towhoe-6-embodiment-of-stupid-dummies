@@ -44,7 +44,7 @@ public abstract class PhysicalObject {
 	}
 	// not used here but could be useful so ima just leave it here
 	public int clamp(int x, int min, int max) { // for the border clipping
-		return Math.min(Math.max(x, min), max);
+		return Math.min(Math.max(x, min), max); // TODO is there a fringe case for this where all 3 value are equal and it returns a 0 idfk
 	}
 	// mutators & accessors
 	public void updYVelocity(int vel) { // upd = update (im an idiot)
