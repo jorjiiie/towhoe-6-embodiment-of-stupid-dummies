@@ -8,6 +8,3 @@ public interface Ship {
 	public void shoot();
 	
 }
-
-// TODO ADD THIS
-//public void shoot;
