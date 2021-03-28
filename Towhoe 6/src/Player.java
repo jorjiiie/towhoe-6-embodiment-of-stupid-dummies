@@ -27,7 +27,7 @@ public class Player extends PhysicalObject implements Ship {
 	// THE SHOOTING SECTION
 	public void shoot() {
 		if (shooting)
-			Towhoe.window.getGame().addPlayerBullets(new Bullet(super.getX(), super.getY(), 0, -10, 5));
+			Towhoe.window.getGame().addPlayerBullets(new Bullet(super.getX()+super.getRadius()/2-2, super.getY()+super.getRadius()/2, 0, -10, 5));
 		// we'll implement a global list of bullets so it's simpler to check yadayada
 	}
 
