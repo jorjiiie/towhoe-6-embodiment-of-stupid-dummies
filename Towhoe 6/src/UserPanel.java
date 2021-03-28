@@ -18,7 +18,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Iterator;
 
+
 public class UserPanel extends JPanel implements KeyListener, ActionListener, JavaArcade {
+
+	final File classDir = new File(UserPanel.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 
 	private Player player; // player
 	private int score, coins; // score, 1 coin = 1 life
@@ -34,7 +37,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	public UserPanel(int width, int height) {
 
 		try {
-			background_image = ImageIO.read(new File("texture3.jpg"));
+			background_image = ImageIO.read(new File(classDir+"/img/texture3.jpg"));
 			img1Y=0;
 			img2Y=-background_image.getHeight(null);
 		}
@@ -133,6 +136,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		default: // TODO is this needed
 		}
 	}
+
 	public void draw_background(Graphics g) {
 		// draws background
 		g.drawImage(background_image, -(background_image.getWidth(null)-Towhoe.GAME_WIDTH)/2,img1Y++,null); // centered image on X axis, scrolling Y axis
@@ -141,6 +145,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		if (img1Y>=background_image.getHeight(null)) img1Y = - background_image.getHeight(null);
 		if (img2Y>=background_image.getHeight(null)) img2Y = - background_image.getHeight(null);
 	}
+
 	// Stuff we have to do every frame + repaint
 	public void paintComponent(Graphics g) {
 		// TODO add for loop for all enemies, collision checks, player , etc etc etc
