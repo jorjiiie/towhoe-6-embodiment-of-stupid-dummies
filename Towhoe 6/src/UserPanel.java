@@ -8,6 +8,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 // import java.util.List;
 // import java.util.LinkedList; // TODO are these used
 import java.util.HashSet;
@@ -22,11 +26,22 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	private javax.swing.Timer timer; // draw rate
 	private ArrayList<Enemy> enemies; // enemies as arraylist
 
+	private Image background_image;
+	private int img1Y,img2Y;
 	private Set<Bullet> player_bullets, enemy_bullets; // separated cause player bullets only check for enemy collision and enemy bullets only check for player collision
 
 	// THE BIG OL CONSTRUCTOR
 	public UserPanel(int width, int height) {
 
+		try {
+			background_image = ImageIO.read(new File("texture3.jpg"));
+			img1Y=0;
+			img2Y=-background_image.getHeight(null);
+		}
+		catch (IOException e) {
+			System.out.println("failed to load background");
+			e.printStackTrace();
+		}
 		Color background = Color.black; // fallback, image bg pls
 		score = 0;
 
@@ -118,11 +133,19 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		default: // TODO is this needed
 		}
 	}
+	public void draw_background(Graphics g) {
+		// draws background
+		g.drawImage(background_image, -(background_image.getWidth(null)-Towhoe.GAME_WIDTH)/2,img1Y++,null); // centered image on X axis, scrolling Y axis
+		g.drawImage(background_image, -(background_image.getWidth(null)-Towhoe.GAME_WIDTH)/2,img2Y++,null);
 
+		if (img1Y>=background_image.getHeight(null)) img1Y = - background_image.getHeight(null);
+		if (img2Y>=background_image.getHeight(null)) img2Y = - background_image.getHeight(null);
+	}
 	// Stuff we have to do every frame + repaint
 	public void paintComponent(Graphics g) {
 		// TODO add for loop for all enemies, collision checks, player , etc etc etc
 		super.paintComponent(g); // the important one keep this first
+		draw_background(g);
 		player.move();
 		player.draw(g);
 
