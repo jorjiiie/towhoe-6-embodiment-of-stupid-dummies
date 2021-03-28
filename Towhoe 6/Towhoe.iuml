@@ -1,0 +1,158 @@
+Exported into an image using PlantUML
+https://www.codeproject.com/Articles/1278703/UML-Made-Easy-with-PlantUML-VS-Code
+https://www.lucidchart.com/pages/uml-class-diagram
+https://plantuml.com/class-diagram
+
+CHEAT SHEET:
+Extension <|--	
+Composition *--	
+Aggregation o--
+
+Class01 *-- "many" Class02 
+
+@startuml Towhoe 6
+scale 2
+note "Mutators and accessors are omitted\nbecause we like having space\n\nOverridden methods and additional\nfields are shown in subclasses\nwhile others are not" as N1
+' Hitbox and dependencies
+class Hitbox {
+    -radius: int
+    -xPos: int 
+    -yPos: int
+    -active: boolean
+    +addX()    
+    +addY()
+}
+' PhysicalObject and dependencies
+abstract PhysicalObject {
+    -xVel: int
+    -yVel: int
+    -hitbox: Hitbox
+    {abstract} #clamp()
+    {abstract} +move()
+    {abstract} +updXVelocity()
+    {abstract} +updYVelocity()
+}
+Hitbox  o-- PhysicalObject  
+
+' Bullet and dependencies
+class Bullet {
+    -active: boolean
+    +move()
+    +isOffscreen()
+    +draw()
+}
+PhysicalObject *--  Bullet   
+
+' Player and dependencies
+interface Ship {
+    +shoot()
+}
+hide Ship fields
+
+class Player {
+    {static} +PLAYER_SPEED: int
+    {static} +PLAYER_FOCUS_SPEED: int
+    -lives: int
+    -pLevel: int
+    -xp: int
+    -focus: boolean 
+    -shooting: boolean 
+    +shoot()
+    +move()
+    +focus()
+    +unfocus()
+    +draw()
+}
+PhysicalObject  *--     Player  
+Ship            <|..    Player  
+
+' Enemy and dependencies
+class Enemy {
+    +shoot()
+}
+PhysicalObject  *--     Enemy   
+Ship            <|..    Enemy   
+
+' UserPanel and dependencies
+interface JavaArcade {
+    +running()
+    +startGame()
+    +getGameName()
+    +pauseGame()
+    +getInstructions()
+    +getCredits()
+    +getHighScore()
+    +stopGame()
+    +getPoints()
+    +setDisplay()
+    +addPlayerBullets()
+}
+hide JavaArcade fields
+
+interface KeyListener{
+    +keyTyped()
+    +keyPressed()
+    +keyReleased()
+}
+hide KeyListener fields
+
+interface ActionListener {
+    +actionPerformed()
+}
+hide ActionListener fields
+
+class JPanel
+hide JPanel fields
+hide JPanel methods
+
+class UserPanel {
+    -player: Player
+    -score: int
+    -coins: int
+    -timer: Timer
+    -enemies: ArrayList<Enemy>
+    -player_bullets: Set<Bullet>
+    +addPlayerBullets()
+    +paintComponent()
+}
+KeyListener     <|..    UserPanel   
+ActionListener  <|..    UserPanel   
+JavaArcade      <|..    UserPanel   
+JPanel          *--     UserPanel   
+Player "1"      o--     UserPanel   
+Bullet "many"   o--     UserPanel   
+
+' GameStats and dependencies
+class GameStats {
+    ' TODO
+}
+JPanel          *--     GameStats   
+
+' ControlPanel and dependencies
+class ControlPanel {
+    ' TOODO
+}
+ActionListener  <|..    ControlPanel   
+JPanel          *--     ControlPanel   
+
+' Towhoe and dependencies
+class JFrame
+hide JFrame fields
+hide JFrame methods
+
+class Towhoe {
+    +{static} GAME_WIDTH: int
+    +{static} GAME HEIGHT: int
+    +{static} window: Towhoe
+    -game JavaArcade
+    -display: GameStats
+    -controls: ControlPanel
+    +getGame()
+}
+JFrame          *--     Towhoe      
+UserPanel       o--     Towhoe      
+GameStats       o--     Towhoe      
+ControlPanel       o--     Towhoe      
+note left           : the one that runs
+
+@enduml

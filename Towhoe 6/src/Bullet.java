@@ -8,14 +8,14 @@ import java.awt.*;
 
 // TODO make this into an abstract maybe or add a field for image somewher efor other bullet types idfk
 public class Bullet extends PhysicalObject {
-	boolean active = false;
+	private boolean active;
 
 	public Bullet(int x, int y, int xVel, int yVel, int r) {
 		super(x, y, xVel, yVel, r);
 		active = true;
 	}
 
-	public Bullet(Bullet o) {
+	public Bullet(Bullet o) { // what okay
 		super(o.getX(), o.getY(), o.getXVelocity(), o.getYVelocity(), o.getRadius());
 		active = true;
 	}
