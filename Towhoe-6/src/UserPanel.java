@@ -33,7 +33,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 	// for debugging purposes
 	// why doesn't java just have a queue
-	private Queue<Integer> prev_frameTimes = new LinkedList<>();
+	private Queue<Long> prev_frameTimes = new LinkedList<>();
 	private long time_sum = 0;
 	// stack up 10 frame buffer for times and average it out
 	private int frame_count = 10,current_frames; 
@@ -173,8 +173,22 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 			else i.remove();
 		}
 		long endTime = System.nanoTime();
+		long nanoseconds = ((endTime-startTime));
+		prev_frameTimes.add(nanoseconds);
+		time_sum+=nanoseconds;
+		if (current_frames<frame_count) {
+			current_frames++;
+		} else {
+			// remove the oldest frame 
+			long front = prev_frameTimes.remove();
+			time_sum-=front;
+		}
+		System.out.println("PREVIOUS FRAME TOOK " + nanoseconds + " ns, AVERAGE FOR **TEN** FRAMES IS " + getMsPerFrame() + " ns");
 	}
 
+	public long getMsPerFrame() {
+		return (time_sum/current_frames);
+	}
 	// TODO FIGURE OUT WTF TO DO WITH THIS
 	private void checkStats() { // called every 5ms, checks status of targets and hero
 
