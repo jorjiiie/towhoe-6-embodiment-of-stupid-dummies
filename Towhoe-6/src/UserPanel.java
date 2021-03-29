@@ -11,9 +11,8 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-
-// import java.util.List;
-// import java.util.LinkedList; // TODO are these used
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Iterator;
@@ -31,6 +30,13 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	private Image background_image;
 	private int img1Y,img2Y;
 	private Set<Bullet> player_bullets, enemy_bullets; // separated cause player bullets only check for enemy collision and enemy bullets only check for player collision
+
+	// for debugging purposes
+	// why doesn't java just have a queue
+	private Queue<Integer> prev_frameTimes = new LinkedList<>();
+	private long time_sum = 0;
+	// stack up 10 frame buffer for times and average it out
+	private int frame_count = 10,current_frames; 
 
 	// THE BIG OL CONSTRUCTOR
 	public UserPanel(int width, int height) {
@@ -148,9 +154,11 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 	// Stuff we have to do every frame + repaint
 	public void paintComponent(Graphics g) {
+		long startTime = System.nanoTime();
 		// TODO add for loop for all enemies, collision checks, player , etc etc etc
 		super.paintComponent(g); // the important one keep this first
-		draw_background(g);
+		
+		if (background_image!=null) draw_background(g);
 		player.move();
 		player.draw(g);
 
@@ -164,6 +172,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 			}
 			else i.remove();
 		}
+		long endTime = System.nanoTime();
 	}
 
 	// TODO FIGURE OUT WTF TO DO WITH THIS
