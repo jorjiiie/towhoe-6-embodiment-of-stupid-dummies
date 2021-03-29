@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 public class UserPanel extends JPanel implements KeyListener, ActionListener, JavaArcade {
 
-	public static final String filePath = new File("").getAbsolutePath();
+	public static final String filePath = System.getProperty("java.class.path");
 	private Player player; // player
 	private int score, coins; // score, 1 coin = 1 life
 
