@@ -21,8 +21,7 @@ import java.util.Iterator;
 
 public class UserPanel extends JPanel implements KeyListener, ActionListener, JavaArcade {
 
-	final File classDir = new File(UserPanel.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-
+	public static final String filePath = new File("").getAbsolutePath();
 	private Player player; // player
 	private int score, coins; // score, 1 coin = 1 life
 
@@ -37,7 +36,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	public UserPanel(int width, int height) {
 
 		try {
-			background_image = ImageIO.read(new File(classDir+"/img/texture3.jpg"));
+			background_image = ImageIO.read(new File(filePath+"/img/texture3.jpg"));
 			img1Y=0;
 			img2Y=-background_image.getHeight(null);
 		}
@@ -45,6 +44,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 			System.out.println("failed to load background");
 			e.printStackTrace();
 		}
+
 		Color background = Color.black; // fallback, image bg pls
 		score = 0;
 
