@@ -50,11 +50,12 @@ public class Towhoe extends JFrame {
 
     // Absolute hack
     // causes game to freeze when resized too small (41x161) but nobody will play like that anyways
-    public int getWidth() {
-        return super.getWidth() - 41;
+    // values are border size x 2 + character diameter
+    public int getBorderWidth() {
+        return super.getWidth() -41;
     }
 
-    public int getHeight() {
-        return super.getHeight() - 161;
+    public int getBorderHeight() {
+        return super.getHeight() -161;
     }
 }

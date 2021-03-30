@@ -36,17 +36,17 @@ public class Bullet extends PhysicalObject {
 	}
 
 	private boolean isOffscreen() {
-		return super.getY() < 0 || super.getY() > Towhoe.window.getHeight() || super.getX() < 0 || super.getX() > Towhoe.window.getWidth(); // i hate how boolean doesnt actually equal 1 is so annoying
+		return super.getY() < 0 || super.getY() > Towhoe.window.getBorderHeight() || super.getX() < 0 || super.getX() > Towhoe.window.getBorderWidth(); // i hate how boolean doesnt actually equal 1 is so annoying
 		/*
-		map of return super.getY()<0 || super.getY()>Towhoe.window.getHeight() || super.getX()<0 || super.getX()>Towhoe.window.getWidth(); 
+		map of return super.getY()<0 || super.getY()>Towhoe.window.getBorderHeight() || super.getX()<0 || super.getX()>Towhoe.window.getBorderWidth(); 
 
 		if(super.getY()<0)
 			return true;
-		else if(super.getY()>Towhoe.window.getHeight())
+		else if(super.getY()>Towhoe.window.getBorderHeight())
 			return true;
 		else if(super.getX()<0)
 			return true;
-		else if(super.getX()>Towhoe.window.getWidth())
+		else if(super.getX()>Towhoe.window.getBorderWidth())
 			return true;
 		else return false;
 
@@ -54,7 +54,7 @@ public class Bullet extends PhysicalObject {
 
 		verus ( if java had booleans actually equal 1 like in c or python or whatever )
 
-		return (super.getY()<0 + super.getY()>Towhoe.window.getHeight() + super.getX()<0 + super.getX()>Towhoe.window.getWidth()) > 0;
+		return (super.getY()<0 + super.getY()>Towhoe.window.getBorderHeight() + super.getX()<0 + super.getX()>Towhoe.window.getBorderWidth()) > 0;
 		cpu can preload all this code and do it in advance before you actually come to it and is faster despite more calculations per run
 		TOO BAD THIS DOESNT WORK CAUSE JAVA IS STUPID AND BOOLEANS DO NOT EQUAL ONE AS WELL
 		this approach is a lot of times good for much larger branches of code and i really want to find somewhere i can implement this

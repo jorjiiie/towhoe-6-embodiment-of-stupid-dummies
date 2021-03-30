@@ -4,7 +4,7 @@ author: all of us
 date: today
 */
 // TODO THIS CLASS IS SO USEFUL RIGHT NOW
-public class Enemy {
+public class Enemy  {
 
 	public Enemy() {
 

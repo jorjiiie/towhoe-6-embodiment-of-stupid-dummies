@@ -66,8 +66,8 @@ public class Player extends PhysicalObject implements Ship {
 	}
 
 	public void move() {
-		super.setX(super.clamp(super.getX() + getXVelocity(), 0, Towhoe.window.getWidth())); // TODO fix game borders
-		super.setY(super.clamp(super.getY() + getYVelocity(), 0, Towhoe.window.getHeight()));
+		super.setX(super.clamp(super.getX() + getXVelocity(), 0, Towhoe.window.getBorderWidth())); // TODO fix game borders
+		super.setY(super.clamp(super.getY() + getYVelocity(), 0, Towhoe.window.getBorderHeight()));
 	}
 
 	public void focus() {
