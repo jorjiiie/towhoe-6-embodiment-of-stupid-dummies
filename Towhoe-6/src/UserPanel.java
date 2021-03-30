@@ -77,6 +77,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		// checkStats();
 		player.shoot(); // having this as what is basically a persist script is bad for performance but the amount of variable juggling we'd do anyways... its worth it
 		repaint();
+		// better perf;
+		Toolkit.getDefaultToolkit().sync();
 	}
 
 	// KEY HANDLER
