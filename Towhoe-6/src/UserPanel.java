@@ -147,8 +147,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 	public void draw_background(Graphics g) {
 		// draws background
-		g.drawImage(background_image, -(background_image.getWidth(null)-Towhoe.GAME_WIDTH)/2,img1Y++,null); // centered image on X axis, scrolling Y axis
-		g.drawImage(background_image, -(background_image.getWidth(null)-Towhoe.GAME_WIDTH)/2,img2Y++,null);
+		g.drawImage(background_image, -(background_image.getWidth(null)-Towhoe.window.getWidth())/2,img1Y++,null); // centered image on X axis, scrolling Y axis
+		g.drawImage(background_image, -(background_image.getWidth(null)-Towhoe.window.getWidth())/2,img2Y++,null);
 
 		if (img1Y>=background_image.getHeight(null)) img1Y = - background_image.getHeight(null);
 		if (img2Y>=background_image.getHeight(null)) img2Y = - background_image.getHeight(null);
