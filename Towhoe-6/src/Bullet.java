@@ -8,16 +8,16 @@ import java.awt.*;
 
 // TODO make this into an abstract maybe or add a field for image somewher efor other bullet types idfk
 public class Bullet extends PhysicalObject {
-	private boolean active;
+
+	private int hits = 1; // how many hits before death - if this is implemented, we'd have to implement bullet memory though 
+	// bullet memory is probably better than enemy memory since bullets will hit less, we can just use arraylists and bath in small n :)
 
 	public Bullet(int x, int y, int xVel, int yVel, int r) {
 		super(x, y, xVel, yVel, r);
-		active = true;
 	}
 
 	public Bullet(Bullet o) { // what okay
 		super(o.getX(), o.getY(), o.getXVelocity(), o.getYVelocity(), o.getRadius());
-		active = true;
 	}
 
 	public void draw(Graphics g) {
@@ -28,13 +28,15 @@ public class Bullet extends PhysicalObject {
 	public void move() {
 		// if it's too far then we destroy!
 		super.move();
-		active = !isOffscreen(); // I did testing and removing it from the list is good enough for garbage collector to get to it
+		if (isOffscreen()) {
+			super.setActive(false);
+		}
 	}
 
-	public boolean getActive() {
-		return active;
+	public void hit() {
+		hits--;
+		if (hits==0) super.setActive(false);
 	}
-
 	private boolean isOffscreen() {
 		return super.getY() < 0 || super.getY() > Towhoe.window.getBorderHeight() || super.getX() < 0 || super.getX() > Towhoe.window.getBorderWidth(); // i hate how boolean doesnt actually equal 1 is so annoying
 		/*

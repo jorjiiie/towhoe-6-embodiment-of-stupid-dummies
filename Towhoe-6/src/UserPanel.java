@@ -21,16 +21,20 @@ import java.util.Iterator;
 public class UserPanel extends JPanel implements KeyListener, ActionListener, JavaArcade {
 
 	public static final String filePath = System.getProperty("java.class.path");
+	public static final int FRAMERATE = 60;
 	private Player player; // player
 	private int score, coins; // score, 1 coin = 1 life
 
+	private static boolean DEBUG_MODE = true;
+
 	private javax.swing.Timer timer; // draw rate
-	private ArrayList<Enemy> enemies; // enemies as arraylist
+	// private ArrayList<Enemy> enemies; // enemies as arraylist
 
 	private Image background_image;
 	private int img1Y,img2Y;
 	private Set<Bullet> player_bullets, enemy_bullets; // separated cause player bullets only check for enemy collision and enemy bullets only check for player collision
 
+	private Set<Enemy> enemies; // I WANT EFFICIENT SEARCH/REMOVE! thanks bye
 	// for debugging purposes
 	// why doesn't java just have a queue
 	private Queue<Long> prev_frameTimes = new LinkedList<>();
@@ -56,7 +60,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 		player = new Player(width / 2, height / 2); // TODO add/fix args pls
 
-		timer = new javax.swing.Timer(16, this); // 16 ms per frame frame rate = ~60, this will stutter a lot noticeably but who cares
+		timer = new javax.swing.Timer(1000/FRAMERATE, this); // 16 ms per frame frame rate = ~60, this will stutter a lot noticeably but who cares
 
 		timer.start();
 		addKeyListener(this); // used for key controls
@@ -67,6 +71,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 		setPreferredSize(new Dimension(width, height));
 		player_bullets = new HashSet<Bullet>();
+		enemy_bullets = new HashSet<Bullet>();
+		enemies = new HashSet<Enemy>();
 	}
 
 	public void addPlayerBullets(Bullet b) {
@@ -77,7 +83,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		// checkStats();
 		player.shoot(); // having this as what is basically a persist script is bad for performance but the amount of variable juggling we'd do anyways... its worth it
 		repaint();
-		// better perf;
+		// better perf unfocused
 		Toolkit.getDefaultToolkit().sync();
 	}
 
@@ -161,31 +167,71 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		super.paintComponent(g); // the important one keep this first
 		
 		if (background_image!=null) draw_background(g);
-		player.move();
-		player.draw(g);
+		
+		
+
+		// test intersections
+		for (Bullet b : player_bullets) {
+			if (b.isActive()) {
+				// if not removed yet for whatever reason
+				for (Enemy k : enemies) {
+					if (!k.isActive()) continue;
+
+					if (k.intersect(b)) {
+						b.hit();
+						k.setActive(false); // same for if we want to implement health (hit())
+						break;
+					}
+
+				}
+			}
+		}
+		for (Bullet b : enemy_bullets) {
+			if (b.intersect(player)) {
+				player.hit();
+				b.hit(); 
+			}
+		}
+
 
 		// TODO ryan explain this to me pls + maybe find a better way
+		// theo this is the best way, its (expected) constant access + remove + add
+
+		// drawing bullets, if something is inactive, then it will get removed and not be drawn
 		for (Iterator<Bullet> i = player_bullets.iterator(); i.hasNext();) {
 			Bullet b = i.next();
-			if (b.getActive()) {
-				b.move();
-				// System.out.println(" BULLET AT " + b.getX() + " " + b.getY()); // DEBUG
+			if (b.isActive()) {
+				// drawing before move means that on the next frame, the calculations will match the drawn (x,y) of the thing
 				b.draw(g);
+				b.move();
 			}
 			else i.remove();
 		}
-		long endTime = System.nanoTime();
-		long nanoseconds = ((endTime-startTime));
-		prev_frameTimes.add(nanoseconds);
-		time_sum+=nanoseconds;
-		if (current_frames<frame_count) {
-			current_frames++;
-		} else {
-			// remove the oldest frame 
-			long front = prev_frameTimes.remove();
-			time_sum-=front;
+		for (Iterator<Bullet> i = enemy_bullets.iterator(); i.hasNext();) {
+			Bullet b = i.next();
+			if (b.isActive()) {
+				b.draw(g);
+				b.move();
+			}
+			else i.remove();
 		}
-		System.out.println("PREVIOUS FRAME TOOK " + nanoseconds + " ns, AVERAGE FOR **TEN** FRAMES IS " + getMsPerFrame() + " ns");
+
+		player.draw(g);
+		player.move();
+		if (DEBUG_MODE) {
+			long endTime = System.nanoTime();
+			long nanoseconds = ((endTime-startTime));
+			prev_frameTimes.add(nanoseconds);
+			time_sum+=nanoseconds;
+			if (current_frames<frame_count) {
+				current_frames++;
+			} else {
+				// remove the oldest frame 
+				long front = prev_frameTimes.remove();
+				time_sum-=front;
+			}
+			System.out.println("PREVIOUS FRAME TOOK " + nanoseconds + " ns, AVERAGE FOR **TEN** FRAMES IS " + getMsPerFrame() + " ns");
+		}
 	}
 
 	public long getMsPerFrame() {

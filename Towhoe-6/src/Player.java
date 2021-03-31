@@ -89,4 +89,8 @@ public class Player extends PhysicalObject implements Ship {
 		// System.out.println("profanities lol"); // DEBUG
 		g.fillOval(super.getX(), super.getY(), super.getRadius(), super.getRadius());
 	}
+	public void hit() {
+		// hit by enemy bullet
+		
+	}
 }

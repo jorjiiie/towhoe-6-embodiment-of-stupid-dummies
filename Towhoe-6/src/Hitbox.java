@@ -8,7 +8,7 @@ date: today
 public class Hitbox {
     private int radius;
     private int xPos, yPos; // make this a pointer to objects y and y pos idfk god i wish java had pointers
-    private boolean active;
+    private boolean active = true;
 
     public Hitbox(int radius, int xPos, int yPos, boolean active) {
         this.radius = radius;
@@ -58,5 +58,8 @@ public class Hitbox {
     
     public boolean isActive() {
         return active;
+    }
+    public void setActive(boolean b) {
+        active = b;
     }
 }

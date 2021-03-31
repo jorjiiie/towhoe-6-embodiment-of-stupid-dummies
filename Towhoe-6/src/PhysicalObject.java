@@ -23,7 +23,7 @@ public abstract class PhysicalObject {
 		// fun stuff
 		this.xVel = xVel;
 		this.yVel = yVel;
-		hitbox = new Hitbox(hitboxRadius, xPos, yPos, false); // TODO active hitbox
+		hitbox = new Hitbox(hitboxRadius, xPos, yPos, true); // TODO active hitbox
 	}
 
 	public void move() {
@@ -32,6 +32,9 @@ public abstract class PhysicalObject {
 		hitbox.addY(yVel);
 	}
 
+	public boolean intersect(PhysicalObject o) {
+		return hitbox.intersect(o.hitbox);
+	}
 	// CLAMP IS COOL
 	protected int clamp(int x, int min, int max) { // for the border clipping
 		return Math.min(Math.max(x, min), max);
@@ -82,6 +85,12 @@ public abstract class PhysicalObject {
 		return hitbox.getRadius();
 	}
 
+	public boolean isActive() {
+		return hitbox.isActive();
+	}
+	public void setActive(boolean b) {
+		hitbox.setActive(b);
+	}
 	// is this really needed (probably)
 	public abstract void draw(Graphics g);
 }
