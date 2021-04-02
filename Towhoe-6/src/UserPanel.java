@@ -169,8 +169,10 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	public void paintComponent(Graphics g) {
 
 		long startTime = System.nanoTime();
-		// TODO add for loop for all enemies, collision checks, player , etc etc etc
 		super.paintComponent(g); // the important one keep this first
+
+		// anti aliasing so circles are actually circles
+		// yes taken from stackoverflow :)
 		Graphics2D g2d = (Graphics2D) g.create();
         RenderingHints hints = new RenderingHints(
                 RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -181,8 +183,10 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		// spawn enemies
 		int to_spawn = spawner.spawn();
 		for (int i=0;i<to_spawn;i++) 
-			spawnEnemy(1);
-
+			spawnEnemy(1); // probably can do randomizer here bc i don't want to implement waves or something
+		if (to_spawn>0) {
+			System.out.println(enemies.size());
+		}
 		// test intersections
 		for (Bullet b : player_bullets) {
 			if (b.isActive()) {
@@ -214,6 +218,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		// theo this is the best way, its (expected) constant access + remove + add
 
 		// drawing bullets, if something is inactive, then it will get removed and not be drawn
+
+		// essentially a for each loop but has the iterator go back if something is removed
 		for (Iterator<Bullet> i = player_bullets.iterator(); i.hasNext();) {
 			Bullet b = i.next();
 			if (b.isActive()) {
@@ -281,8 +287,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	}
 
 	/*
-	 * This method should start your game, it should also set a global boolean value
-	 * so that your running method can return the appropriate value
+	 * This method shorunninguld start your game, it should also set a global boolean value
+	 * so that your  method can return the appropriate value
 	 */
 
 	public void startGame() {

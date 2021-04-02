@@ -7,9 +7,10 @@ date: today
 import java.awt.*;
 public class Enemy extends PhysicalObject implements Ship  {
 
+
 	private int lives;
 	// 'soak' up bullets
-	private int dmg = 1;
+	private int dmg = 2;
 	public Enemy() {
 		super(0,0,0,0,15);
 		lives=1;

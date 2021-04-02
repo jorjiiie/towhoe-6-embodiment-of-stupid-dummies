@@ -33,6 +33,9 @@ public class Player extends PhysicalObject implements Ship {
 			if (System.nanoTime()-last_shot>=200000000){
 				last_shot = System.nanoTime();
 				Towhoe.window.getGame().addPlayerBullets(new Bullet(super.getX()+super.getRadius()/2-2, super.getY()+super.getRadius()/2, 0, -10, 5));
+				// buckshot bc i'm bored
+				Towhoe.window.getGame().addPlayerBullets(new Bullet(super.getX()+super.getRadius()/2-2,super.getY()+super.getRadius()/2, 5, -9, 10,6,4));
+				Towhoe.window.getGame().addPlayerBullets(new Bullet(super.getX()+super.getRadius()/2-2,super.getY()+super.getRadius()/2, -5, -9, 10,6,4));
 			}
 		}
 		// we'll implement a global list of bullets so it's simpler to check yadayada

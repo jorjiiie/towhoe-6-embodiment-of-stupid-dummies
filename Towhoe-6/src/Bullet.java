@@ -17,14 +17,16 @@ public class Bullet extends PhysicalObject {
 		super(x, y, xVel, yVel, r);
 		previous_hit = new ArrayList<Enemy>(hits);
 	}
-	public Bullet(int x, int y, int xVel, int yVel, int r, int hits) {
+	public Bullet(int x, int y, int xVel, int yVel, int r, int hits, int dmg) {
 		super(x,y,xVel,yVel,r);
 		original_hits=hits;
 		previous_hit = new ArrayList<Enemy>(hits); 
+		dmg = dmg;
 	}
 	public Bullet(Bullet o) { // what okay
 		super(o.getX(), o.getY(), o.getXVelocity(), o.getYVelocity(), o.getRadius());
 		hits = o.getHits();
+		dmg = o.getDmg();
 		previous_hit = new ArrayList<Enemy>();
 	}
 
