@@ -11,23 +11,30 @@ public class Player extends PhysicalObject implements Ship {
 	public static final int PLAYER_SPEED = 5; // pixels/frame or pixels/sec if its too fast but i think it's ok
 	public static final int PLAYER_FOCUS_SPEED = 1; // same as speed but separate speed for focus mode
 
+	public static final int PLAYER_RADIUS = 15;
 	private int lives = 5; // TODO turn into coin maybe
 	private int pLevel = 0; // TODO add this to how shoot works
 	private int xp = 0; // TODO add this when item collision or osmething asdlkajsdl
 	private boolean focus, shooting;
 
+	private long last_shot;
 	public Player(int x, int y) {
 		// initial velocity is [0,0]
 		// initial position is middle of panel so we pass that in
-		super(x, y, 0, 0, 15); // radius for now? i have no idea
+		super(x, y, 0, 0, PLAYER_RADIUS); // radius for now? i have no idea
 		focus = false;
 		shooting = false;
 	}
 
 	// THE SHOOTING SECTION
 	public void shoot() {
-		if (shooting)
-			Towhoe.window.getGame().addPlayerBullets(new Bullet(super.getX()+super.getRadius()/2-2, super.getY()+super.getRadius()/2, 0, -10, 5));
+		if (shooting) {
+			// 200ms delay
+			if (System.nanoTime()-last_shot>=200000000){
+				last_shot = System.nanoTime();
+				Towhoe.window.getGame().addPlayerBullets(new Bullet(super.getX()+super.getRadius()/2-2, super.getY()+super.getRadius()/2, 0, -10, 5));
+			}
+		}
 		// we'll implement a global list of bullets so it's simpler to check yadayada
 	}
 
@@ -91,6 +98,6 @@ public class Player extends PhysicalObject implements Ship {
 	}
 	public void hit() {
 		// hit by enemy bullet
-		
+
 	}
 }

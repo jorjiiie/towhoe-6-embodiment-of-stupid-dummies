@@ -13,7 +13,7 @@ public class EnemySpawner {
 		frames_until_spawn=300;
 		start_ns = System.nanoTime();
 	}
-	public void spawn() {
+	public int spawn() {
 
 		frames_until_spawn--;
 		if (frames_until_spawn<=0) {
@@ -29,10 +29,11 @@ public class EnemySpawner {
 			frames_until_spawn = (int) (UserPanel.FRAMERATE*1.0 / spawns_per_sec); 
 			frames_until_spawn = Math.min(frames_until_spawn, 300);
 
-			System.out.println(val + " " + spawns_per_sec + " " + frames_until_spawn + " elapsed time:" + current_ns/100000000.0);
-
+			// spawn code or how many enemies?
+			return (int) Math.log((Math.random()*2000));
 
 		}
+		return 0;
 	}
 	public static void main(String[] args) {
 		EnemySpawner j = new EnemySpawner();

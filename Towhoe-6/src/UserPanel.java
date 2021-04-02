@@ -25,7 +25,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	private Player player; // player
 	private int score, coins; // score, 1 coin = 1 life
 
-	private static boolean DEBUG_MODE = true;
+	private static int DEBUG_MODE = 1;
 
 	private javax.swing.Timer timer; // draw rate
 	// private ArrayList<Enemy> enemies; // enemies as arraylist
@@ -42,6 +42,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	// stack up 10 frame buffer for times and average it out
 	private int frame_count = 10,current_frames; 
 
+	private EnemySpawner spawner;
 	// THE BIG OL CONSTRUCTOR
 	public UserPanel(int width, int height) {
 
@@ -73,6 +74,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		player_bullets = new HashSet<Bullet>();
 		enemy_bullets = new HashSet<Bullet>();
 		enemies = new HashSet<Enemy>();
+		spawner = new EnemySpawner();
 	}
 
 	public void addPlayerBullets(Bullet b) {
@@ -86,7 +88,9 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		// better perf unfocused
 		Toolkit.getDefaultToolkit().sync();
 	}
-
+	public void spawnEnemy(int type) {
+		enemies.add(new Enemy((int)(Math.random()*500), 0, 0, 2));
+	}
 	// KEY HANDLER
 	public void keyTyped(KeyEvent e) {
 	}
@@ -147,6 +151,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		case KeyEvent.VK_ENTER:
 			// TODO start the game i guess
 			break;
+		case KeyEvent.VK_U:
+			spawnEnemy(1);
 		default: // TODO is this needed
 		}
 	}
@@ -162,13 +168,17 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 	// Stuff we have to do every frame + repaint
 	public void paintComponent(Graphics g) {
+
 		long startTime = System.nanoTime();
 		// TODO add for loop for all enemies, collision checks, player , etc etc etc
 		super.paintComponent(g); // the important one keep this first
 		
 		if (background_image!=null) draw_background(g);
 		
-		
+		// spawn enemies
+		int to_spawn = spawner.spawn();
+		for (int i=0;i<to_spawn;i++) 
+			spawnEnemy(1);
 
 		// test intersections
 		for (Bullet b : player_bullets) {
@@ -178,8 +188,11 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 					if (!k.isActive()) continue;
 
 					if (k.intersect(b)) {
-						b.hit();
-						k.setActive(false); // same for if we want to implement health (hit())
+						if (b.hasHit(k)) {
+							continue;
+						}
+						b.hit(k);
+						k.hit(b.getDmg()); // same for if we want to implement health (hit())
 						break;
 					}
 
@@ -189,7 +202,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		for (Bullet b : enemy_bullets) {
 			if (b.intersect(player)) {
 				player.hit();
-				b.hit(); 
+				b.phit(); 
 			}
 		}
 
@@ -216,9 +229,18 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 			else i.remove();
 		}
 
+		for (Iterator<Enemy> i = enemies.iterator(); i.hasNext();) {
+			Enemy current = i.next();
+			if (current.isActive()) {
+				current.draw(g);
+				current.move();
+			}
+			else i.remove();
+		}
+
 		player.draw(g);
 		player.move();
-		if (DEBUG_MODE) {
+		if (DEBUG_MODE>=3) {
 			long endTime = System.nanoTime();
 			long nanoseconds = ((endTime-startTime));
 			prev_frameTimes.add(nanoseconds);

@@ -5,26 +5,34 @@ date: today
 */
 
 import java.awt.*;
-
+import java.util.ArrayList;
 // TODO make this into an abstract maybe or add a field for image somewher efor other bullet types idfk
 public class Bullet extends PhysicalObject {
 
-	private int hits = 1; // how many hits before death - if this is implemented, we'd have to implement bullet memory though 
+	private int hits = 4; // how many hits before death - if this is implemented, we'd have to implement bullet memory though 
+	private int dmg = 2;
 	// bullet memory is probably better than enemy memory since bullets will hit less, we can just use arraylists and bath in small n :)
-
+	private ArrayList<Enemy> previous_hit;
 	public Bullet(int x, int y, int xVel, int yVel, int r) {
 		super(x, y, xVel, yVel, r);
+		previous_hit = new ArrayList<Enemy>();
 	}
 
 	public Bullet(Bullet o) { // what okay
 		super(o.getX(), o.getY(), o.getXVelocity(), o.getYVelocity(), o.getRadius());
+		previous_hit = new ArrayList<Enemy>();
 	}
 
 	public void draw(Graphics g) {
 		g.setColor(Color.BLUE);
 		g.fillOval(super.getX(), super.getY(), super.getRadius(), super.getRadius());
 	}
-
+	public boolean hasHit(Enemy e) {
+		for (Enemy enemy : previous_hit) {
+			if (enemy==e) return true;
+		}
+		return false;
+	}
 	public void move() {
 		// if it's too far then we destroy!
 		super.move();
@@ -32,10 +40,18 @@ public class Bullet extends PhysicalObject {
 			super.setActive(false);
 		}
 	}
-
-	public void hit() {
+	public void phit() {
+		// hit player
 		hits--;
 		if (hits==0) super.setActive(false);
+	}
+	public void hit(Enemy e) {
+		hits-=e.getDmg();
+		previous_hit.add(e);
+		if (hits<=0) super.setActive(false);
+	}
+	public int getDmg() {
+		return dmg;
 	}
 	private boolean isOffscreen() {
 		return super.getY() < 0 || super.getY() > Towhoe.window.getBorderHeight() || super.getX() < 0 || super.getX() > Towhoe.window.getBorderWidth(); // i hate how boolean doesnt actually equal 1 is so annoying
