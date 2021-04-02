@@ -28,7 +28,6 @@ public class Enemy extends PhysicalObject implements Ship  {
 	public void hit(int dmg) {
 		
 		lives-=dmg;
-		System.out.println("ENEMY HIT, HAS " + lives + " LEFT!!! " + dmg);
 		if (lives<=0) super.setActive(false);
 	}
 	public void draw(Graphics g) {

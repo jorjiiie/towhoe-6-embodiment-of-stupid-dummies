@@ -45,7 +45,6 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	private EnemySpawner spawner;
 	// THE BIG OL CONSTRUCTOR
 	public UserPanel(int width, int height) {
-
 		try {
 			background_image = ImageIO.read(new File(filePath+"/img/texture3.jpg"));
 			img1Y=0;
@@ -172,8 +171,12 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		long startTime = System.nanoTime();
 		// TODO add for loop for all enemies, collision checks, player , etc etc etc
 		super.paintComponent(g); // the important one keep this first
-		
-		if (background_image!=null) draw_background(g);
+		Graphics2D g2d = (Graphics2D) g.create();
+        RenderingHints hints = new RenderingHints(
+                RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHints(hints);
+
+		if (background_image!=null) draw_background(g2d);
 		
 		// spawn enemies
 		int to_spawn = spawner.spawn();
@@ -215,7 +218,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 			Bullet b = i.next();
 			if (b.isActive()) {
 				// drawing before move means that on the next frame, the calculations will match the drawn (x,y) of the thing
-				b.draw(g);
+				b.draw(g2d);
 				b.move();
 			}
 			else i.remove();
@@ -223,7 +226,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		for (Iterator<Bullet> i = enemy_bullets.iterator(); i.hasNext();) {
 			Bullet b = i.next();
 			if (b.isActive()) {
-				b.draw(g);
+				b.draw(g2d);
 				b.move();
 			}
 			else i.remove();
@@ -232,14 +235,15 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		for (Iterator<Enemy> i = enemies.iterator(); i.hasNext();) {
 			Enemy current = i.next();
 			if (current.isActive()) {
-				current.draw(g);
+				current.draw(g2d);
 				current.move();
 			}
 			else i.remove();
 		}
 
-		player.draw(g);
+		player.draw(g2d);
 		player.move();
+		g2d.dispose();
 		if (DEBUG_MODE>=3) {
 			long endTime = System.nanoTime();
 			long nanoseconds = ((endTime-startTime));

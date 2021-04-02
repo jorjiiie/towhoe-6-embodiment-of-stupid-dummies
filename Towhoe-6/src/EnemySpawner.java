@@ -30,7 +30,7 @@ public class EnemySpawner {
 			frames_until_spawn = Math.min(frames_until_spawn, 300);
 
 			// spawn code or how many enemies?
-			return (int) Math.log((Math.random()*2000));
+			return (int) Math.log((Math.random()*2000*val));
 
 		}
 		return 0;
