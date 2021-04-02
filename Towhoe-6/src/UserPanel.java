@@ -151,7 +151,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 			// TODO start the game i guess
 			break;
 		case KeyEvent.VK_U:
-			spawnEnemy(1);
+			if (DEBUG_MODE>0) spawnEnemy(1);
 		default: // TODO is this needed
 		}
 	}

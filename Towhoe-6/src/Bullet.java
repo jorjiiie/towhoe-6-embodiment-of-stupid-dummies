@@ -9,17 +9,22 @@ import java.util.ArrayList;
 // TODO make this into an abstract maybe or add a field for image somewher efor other bullet types idfk
 public class Bullet extends PhysicalObject {
 
-	private int hits = 4; // how many hits before death - if this is implemented, we'd have to implement bullet memory though 
+	private int hits = 4,original_hits=4; // how many hits before death - if this is implemented, we'd have to implement bullet memory though 
 	private int dmg = 2;
 	// bullet memory is probably better than enemy memory since bullets will hit less, we can just use arraylists and bath in small n :)
 	private ArrayList<Enemy> previous_hit;
 	public Bullet(int x, int y, int xVel, int yVel, int r) {
 		super(x, y, xVel, yVel, r);
-		previous_hit = new ArrayList<Enemy>();
+		previous_hit = new ArrayList<Enemy>(hits);
 	}
-
+	public Bullet(int x, int y, int xVel, int yVel, int r, int hits) {
+		super(x,y,xVel,yVel,r);
+		original_hits=hits;
+		previous_hit = new ArrayList<Enemy>(hits); 
+	}
 	public Bullet(Bullet o) { // what okay
 		super(o.getX(), o.getY(), o.getXVelocity(), o.getYVelocity(), o.getRadius());
+		hits = o.getHits();
 		previous_hit = new ArrayList<Enemy>();
 	}
 
@@ -40,11 +45,16 @@ public class Bullet extends PhysicalObject {
 			super.setActive(false);
 		}
 	}
+	public int getHits() {
+		return original_hits;
+	}
+
 	public void phit() {
 		// hit player
 		hits--;
 		if (hits==0) super.setActive(false);
 	}
+
 	public void hit(Enemy e) {
 		hits-=e.getDmg();
 		previous_hit.add(e);
