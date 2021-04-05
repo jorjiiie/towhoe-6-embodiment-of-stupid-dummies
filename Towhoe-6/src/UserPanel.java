@@ -25,7 +25,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	private Player player; // player
 	private int score, coins; // score, 1 coin = 1 life
 
-	private static int DEBUG_MODE = 1;
+	private static int DEBUG_MODE = 3;
 
 	private javax.swing.Timer timer; // draw rate
 	// private ArrayList<Enemy> enemies; // enemies as arraylist
