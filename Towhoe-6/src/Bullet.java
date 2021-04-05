@@ -13,25 +13,32 @@ public class Bullet extends PhysicalObject {
 	private int dmg = 2;
 	// bullet memory is probably better than enemy memory since bullets will hit less, we can just use arraylists and bath in small n :)
 	private ArrayList<Enemy> previous_hit;
+	private Color col;
+
 	public Bullet(int x, int y, int xVel, int yVel, int r) {
 		super(x, y, xVel, yVel, r);
 		previous_hit = new ArrayList<Enemy>(hits);
+		col = Color.BLUE; // default;
 	}
 	public Bullet(int x, int y, int xVel, int yVel, int r, int hits, int dmg) {
 		super(x,y,xVel,yVel,r);
 		original_hits=hits;
 		previous_hit = new ArrayList<Enemy>(hits); 
 		dmg = dmg;
+		col = Color.BLUE;
 	}
 	public Bullet(Bullet o) { // what okay
 		super(o.getX(), o.getY(), o.getXVelocity(), o.getYVelocity(), o.getRadius());
 		hits = o.getHits();
 		dmg = o.getDmg();
 		previous_hit = new ArrayList<Enemy>();
+		col=o.col;
 	}
 
 	public void draw(Graphics g) {
-		g.setColor(Color.BLUE);
+		g.setColor(Color.WHITE);
+		g.fillOval(super.getX()-1,super.getY()-1,super.getRadius()+2,super.getRadius()+2);
+		g.setColor(col);
 		g.fillOval(super.getX(), super.getY(), super.getRadius(), super.getRadius());
 	}
 	public boolean hasHit(Enemy e) {

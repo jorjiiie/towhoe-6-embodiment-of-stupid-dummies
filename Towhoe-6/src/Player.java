@@ -12,33 +12,41 @@ public class Player extends PhysicalObject implements Ship {
 	public static final int PLAYER_FOCUS_SPEED = 1; // same as speed but separate speed for focus mode
 
 	public static final int PLAYER_RADIUS = 15;
-	private int lives = 5; // TODO turn into coin maybe
+	private int lives = 50; // TODO turn into coin maybe
 	private int pLevel = 0; // TODO add this to how shoot works
 	private int xp = 0; // TODO add this when item collision or osmething asdlkajsdl
 	private boolean focus, shooting;
+	// can the player be hit
+	private boolean can_hit = true; 
 
-	private long last_shot;
+	private long last_shot, last_hit;
 	public Player(int x, int y) {
 		// initial velocity is [0,0]
 		// initial position is middle of panel so we pass that in
 		super(x, y, 0, 0, PLAYER_RADIUS); // radius for now? i have no idea
 		focus = false;
 		shooting = false;
+		last_hit = 0;
 	}
-
 	// THE SHOOTING SECTION
-	public void shoot() {
+	public ArrayList<Bullet> shoot() {
 		if (shooting) {
 			// 200ms delay
+
+			// TO DO - convert to frames so pausing is only dependent on one thing
 			if (System.nanoTime()-last_shot>=200000000){
+				
+				ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+				bullets.add(new Bullet(super.getX()+super.getRadius()/2-2, super.getY()+super.getRadius()/2, 0, -10, 5));
+				bullets.add(new Bullet(super.getX()+super.getRadius()/2-4,super.getY()+super.getRadius()/2-4, 5, -9, 10,6,4));
+				bullets.add(new Bullet(super.getX()+super.getRadius()/2-4,super.getY()+super.getRadius()/2-4, -5, -9, 10,6,4));
 				last_shot = System.nanoTime();
-				Towhoe.window.getGame().addPlayerBullets(new Bullet(super.getX()+super.getRadius()/2-2, super.getY()+super.getRadius()/2, 0, -10, 5));
-				// buckshot bc i'm bored
-				Towhoe.window.getGame().addPlayerBullets(new Bullet(super.getX()+super.getRadius()/2-2,super.getY()+super.getRadius()/2, 5, -9, 10,6,4));
-				Towhoe.window.getGame().addPlayerBullets(new Bullet(super.getX()+super.getRadius()/2-2,super.getY()+super.getRadius()/2, -5, -9, 10,6,4));
+				return bullets;
+
 			}
+			return null;
 		}
-		// we'll implement a global list of bullets so it's simpler to check yadayada
+		return null;
 	}
 
 	public void startShoot() {
@@ -95,12 +103,33 @@ public class Player extends PhysicalObject implements Ship {
 	}
 
 	public void draw(Graphics g) {
-		g.setColor(focus ? Color.BLUE : Color.RED);
+
+		if (System.nanoTime()-last_hit>=1000000000) {
+			can_hit=true;
+			if (focus) g.setColor(Color.BLUE);
+			else g.setColor(Color.RED);
+
+		} else {
+			// add yellow tint? (idk lol can change later)
+			if (focus) g.setColor(Color.YELLOW);
+			else g.setColor(Color.ORANGE);
+		}
 		// System.out.println("profanities lol"); // DEBUG
 		g.fillOval(super.getX(), super.getY(), super.getRadius(), super.getRadius());
-	}
-	public void hit() {
-		// hit by enemy bullet
 
+	}
+	public int hit() {
+		// hit by enemy bullet
+		if (System.nanoTime()-last_hit<1000000000) {
+			return 0;
+		}
+		can_hit=true;
+		last_hit = System.nanoTime();
+		lives--;
+		if (lives==0) {
+			// GAME OVER... how to do this? 
+			return -1;
+		}
+		return 1;
 	}
 }

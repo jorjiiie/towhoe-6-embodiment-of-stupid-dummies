@@ -8,5 +8,5 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public interface Ship {
-	public void shoot();
+	public ArrayList<Bullet> shoot();
 }

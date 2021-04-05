@@ -5,9 +5,10 @@ date: today
 */
 // TODO THIS CLASS IS SO USEFUL RIGHT NOW
 import java.awt.*;
+import java.util.ArrayList;
 public class Enemy extends PhysicalObject implements Ship  {
 
-	private int shots_per_second;
+	private double shots_per_second;
 	private int FRAMES_PER_SHOT;
 	private int frames_until_next;
 	private int lives;
@@ -27,15 +28,19 @@ public class Enemy extends PhysicalObject implements Ship  {
 		super(x,y,xVel,yVel,hitboxRadius);
 		this.lives=lives;
 		shots_per_second=shots;
-		FRAMES_PER_SHOT = (int) (Toehow.window.getGame().FRAMERATE / shots);
+		FRAMES_PER_SHOT = (int) (UserPanel.FRAMERATE / shots);
 		frames_until_next = FRAMES_PER_SHOT;
 	}
 
-	public void shoot() {
+	public ArrayList<Bullet> shoot() {
 		frames_until_next--;
 		if (frames_until_next<=0) {
 			frames_until_next = FRAMES_PER_SHOT;
+			ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+			bullets.add(new Bullet(super.getX()+super.getRadius()/2-2, super.getY()+super.getRadius()/2, 0, 5, 5));
+			return bullets;
 		}
+		return null;
 	}
 	public void hit(int dmg) {
 		
@@ -46,11 +51,15 @@ public class Enemy extends PhysicalObject implements Ship  {
 		g.setColor(Color.GREEN);
 		g.fillOval(super.getX(),super.getY(),super.getRadius(),super.getRadius());
 	}
-	public void shoot() {
-		return;
-	}
+
 	public int getDmg() {
 		return dmg;
 	}
-
+	public void move() {
+		if (isOffscreen()) setActive(false);
+		super.move();
+	}
+	private boolean isOffscreen() {
+		return super.getY() < 0 || super.getY() > Towhoe.window.getBorderHeight() || super.getX() < 0 || super.getX() > Towhoe.window.getBorderWidth(); 
+	}
 }

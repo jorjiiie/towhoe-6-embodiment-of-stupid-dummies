@@ -25,7 +25,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	private Player player; // player
 	private int score, coins; // score, 1 coin = 1 life
 
-	private static int DEBUG_MODE = 3;
+	private static int DEBUG_MODE = 1;
 
 	private javax.swing.Timer timer; // draw rate
 	// private ArrayList<Enemy> enemies; // enemies as arraylist
@@ -82,13 +82,97 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 	public void actionPerformed(ActionEvent e) { // draw those mf frames
 		// checkStats();
-		player.shoot(); // having this as what is basically a persist script is bad for performance but the amount of variable juggling we'd do anyways... its worth it
+		long startTime = System.nanoTime();
+
+		ArrayList<Bullet> player_shoot = player.shoot(); // having this as what is basically a persist script is bad for performance but the amount of variable juggling we'd do anyways... its worth it
+		if (player_shoot!=null) {
+			for (Bullet b : player_shoot) {
+				player_bullets.add(b);
+			}
+		}
+
+		for (Enemy en : enemies) {
+			// probably causes high overhead but |enemies| should be < 30 so this isn't actually that bad...
+			ArrayList<Bullet> enemy_shot = en.shoot(); 
+
+
+			if (enemy_shot!=null) {
+				for (Bullet b : enemy_shot) {
+					enemy_bullets.add(b);
+				}
+			}
+
+		}
+
+		// spawn enemies
+		int to_spawn = spawner.spawn();
+		for (int i=0;i<to_spawn;i++) 
+			spawnEnemy(1); // probably can do randomizer here bc i don't want to implement waves or something
+		if (to_spawn>0) {
+			System.out.println(enemies.size());
+		}
+		// test intersections
+		for (Bullet b : player_bullets) {
+			if (b.isActive()) {
+				// if not removed yet for whatever reason
+				for (Enemy k : enemies) {
+					if (!k.isActive()) continue;
+
+					if (k.intersect(b)) {
+						if (b.hasHit(k)) {
+							continue;
+						}
+						b.hit(k);
+						k.hit(b.getDmg()); // same for if we want to implement health (hit())
+						break;
+					}
+
+				}
+			}
+		}
+
+		for (Bullet b : enemy_bullets) {
+			if (b.intersect(player)) {
+				// probably an invulnerable period
+				int player_state = player.hit();
+				if (player_state==-1) {
+					// game over
+					// DO SOMETHING
+				}
+				if (player_state==1) {
+					// returns true if it is past 1s, which is where player is invulnerable
+					b.phit();
+				}
+			}
+		}
+
+
 		repaint();
 		// better perf unfocused
 		Toolkit.getDefaultToolkit().sync();
+
+		if (DEBUG_MODE>=3) {
+			long endTime = System.nanoTime();
+			long nanoseconds = ((endTime-startTime));
+			prev_frameTimes.add(nanoseconds);
+			time_sum+=nanoseconds;
+			if (current_frames<frame_count) {
+				current_frames++;
+			} else {
+				// remove the oldest frame 
+				long front = prev_frameTimes.remove();
+				time_sum-=front;
+			}
+			System.out.println("PREVIOUS FRAME TOOK " + nanoseconds + " ns, AVERAGE FOR **TEN** FRAMES IS " + getMsPerFrame() + " ns");
+		}
 	}
 	public void spawnEnemy(int type) {
-		enemies.add(new Enemy((int)(Math.random()*500), 0, 0, 2));
+		switch(type) {
+			default:
+				// spawn a default enemy with random x at top of screen
+				enemies.add(new Enemy((int)(Math.random()*500), 0, 0, 2, 15, 4, .5));
+		}
+		
 	}
 	// KEY HANDLER
 	public void keyTyped(KeyEvent e) {
@@ -168,7 +252,6 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	// Stuff we have to do every frame + repaint
 	public void paintComponent(Graphics g) {
 
-		long startTime = System.nanoTime();
 		super.paintComponent(g); // the important one keep this first
 
 		// anti aliasing so circles are actually circles
@@ -180,40 +263,6 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 		if (background_image!=null) draw_background(g2d);
 		
-		// spawn enemies
-		int to_spawn = spawner.spawn();
-		for (int i=0;i<to_spawn;i++) 
-			spawnEnemy(1); // probably can do randomizer here bc i don't want to implement waves or something
-		if (to_spawn>0) {
-			System.out.println(enemies.size());
-		}
-		// test intersections
-		for (Bullet b : player_bullets) {
-			if (b.isActive()) {
-				// if not removed yet for whatever reason
-				for (Enemy k : enemies) {
-					if (!k.isActive()) continue;
-
-					if (k.intersect(b)) {
-						if (b.hasHit(k)) {
-							continue;
-						}
-						b.hit(k);
-						k.hit(b.getDmg()); // same for if we want to implement health (hit())
-						break;
-					}
-
-				}
-			}
-		}
-		for (Bullet b : enemy_bullets) {
-			if (b.intersect(player)) {
-				player.hit();
-				b.phit(); 
-			}
-		}
-
-
 		// TODO ryan explain this to me pls + maybe find a better way
 		// theo this is the best way, its (expected) constant access + remove + add
 
@@ -237,7 +286,6 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 			}
 			else i.remove();
 		}
-
 		for (Iterator<Enemy> i = enemies.iterator(); i.hasNext();) {
 			Enemy current = i.next();
 			if (current.isActive()) {
@@ -250,20 +298,6 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		player.draw(g2d);
 		player.move();
 		g2d.dispose();
-		if (DEBUG_MODE>=3) {
-			long endTime = System.nanoTime();
-			long nanoseconds = ((endTime-startTime));
-			prev_frameTimes.add(nanoseconds);
-			time_sum+=nanoseconds;
-			if (current_frames<frame_count) {
-				current_frames++;
-			} else {
-				// remove the oldest frame 
-				long front = prev_frameTimes.remove();
-				time_sum-=front;
-			}
-			System.out.println("PREVIOUS FRAME TOOK " + nanoseconds + " ns, AVERAGE FOR **TEN** FRAMES IS " + getMsPerFrame() + " ns");
-		}
 	}
 
 	public long getMsPerFrame() {
