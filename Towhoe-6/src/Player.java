@@ -36,9 +36,9 @@ public class Player extends PhysicalObject implements Ship {
 				
 				ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 				// this is fun stuff
-				bullets.add(new Bullet(super.getX()+super.getRadius()-2,super.getY()+super.getRadius()-2, 0, -10, 2));
-				bullets.add(new Bullet(super.getX()+super.getRadius()-4,super.getY()+super.getRadius()-4, 5, -9, 5,6,4));
-				bullets.add(new Bullet(super.getX()+super.getRadius()-4,super.getY()+super.getRadius()-4, -5, -9, 5,6,4));
+				bullets.add(new Bullet(super.getX()+super.getRadius()-4,super.getY()+super.getRadius()-2, 0, -10, 4));
+				bullets.add(new Bullet(super.getX()+super.getRadius()-2,super.getY()+super.getRadius()-4, focus ? 2 : 5, -9, 2,6,2));
+				bullets.add(new Bullet(super.getX()+super.getRadius()-2,super.getY()+super.getRadius()-4, focus ? -2 : -5, -9, 3,6,2));
 				last_shot = System.nanoTime();
 				return bullets;
 

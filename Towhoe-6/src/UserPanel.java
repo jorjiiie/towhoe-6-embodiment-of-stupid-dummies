@@ -159,6 +159,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 				int player_state = player.hit();
 				if (player_state==-1) {
 					// game over
+					text.setText("GAME OVER");
+					text.setVisible(true);
 					stopGame();
 					// DO SOMETHING
 				}
@@ -317,7 +319,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		for (Iterator<Bullet> i = player_bullets.iterator(); i.hasNext();) {
 			Bullet b = i.next();
 			if (b.isActive()) {
-				// drawing before move means that on the next frame, the calculations will match the drawn (x,y) of the thing
+				// drawing before move means that on the next frame,
+				// the calculations will match the drawn (x,y) of the thing
 				b.draw(g2d);
 				b.move();
 			}
@@ -354,6 +357,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	public int getPlayerY() {
 		return player.getY();
 	}
+
+	
 	// TODO FIGURE OUT WTF TO DO WITH THIS
 	private void checkStats() {
 		// YUP THIS IS VERY MUCH METHOD USED GOOD !!

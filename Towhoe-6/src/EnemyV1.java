@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class EnemyV1 extends Enemy{
 	public EnemyV1() {
-		super((int)(Math.random()*500),0,0,1,15, 200, 0.001);
+		super((int)(Math.random()*500),0,0,1,35, 200, 0.001);
 	}
 	
 	public void draw(Graphics g) {
