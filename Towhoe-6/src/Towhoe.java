@@ -41,6 +41,12 @@ public class Towhoe extends JFrame {
         return game;
     }
 
+    public void restartGame() {
+    	window = new Towhoe();
+	window.setBounds(100,100,600,600);
+	window.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	window.setVisible(true);
+    }
     // Absolute hack
     // causes game to freeze when resized too small (41x194) but nobody will play like that anyways
     // values are border size x 2 + character diameter but for some reason the borderheight changed so its 194 now.

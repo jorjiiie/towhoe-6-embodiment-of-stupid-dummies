@@ -207,6 +207,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 			}
 			System.out.println("PREVIOUS FRAME TOOK " + nanoseconds + " ns, AVERAGE FOR **TEN** FRAMES IS " + getMsPerFrame() + " ns");
 		}
+		System.out.println(Towhoe.window);
 	}
 	public void spawnEnemy(int type) {
 		switch(type) {
@@ -362,8 +363,11 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		return running;
 	}
 
-	public void startGame() {
-		if (done) return; // cannot start again! 
+	public void startGame() {	
+		if (done) {
+			Towhoe.window.restartGame();
+			done = false;
+		}
 		text.setVisible(false);
 		running = true;
 	}
