@@ -1,0 +1,168 @@
+Exported into an image using PlantUML
+https://www.codeproject.com/Articles/1278703/UML-Made-Easy-with-PlantUML-VS-Code
+https://www.lucidchart.com/pages/uml-class-diagram
+https://plantuml.com/class-diagram
+
+CHEAT SHEET:
+Extension <|--	
+Composition *--	
+Aggregation o--
+
+Class01 *-- "many" Class02 
+
+@startuml Towhoe 6
+scale 2
+note "Mutators and accessors are omitted\nbecause we like having space\n\nOverridden methods and additional\nfields are shown in subclasses\nwhile others are not" as N1
+' Hitbox and dependencies
+class Hitbox {
+    -radius: int
+    -xPos: int 
+    -yPos: int
+    -active: boolean
+    +addX()    
+    +addY()
+}
+' PhysicalObject and dependencies
+abstract PhysicalObject {
+    -xVel: int
+    -yVel: int
+    -hitbox: Hitbox
+    {abstract} #clamp()
+    {abstract} +move()
+    {abstract} +updXVelocity()
+    {abstract} +updYVelocity()
+    {abstract} +draw()
+}
+Hitbox  o-- PhysicalObject  
+
+' Bullet and dependencies
+class Bullet {
+    -active: boolean
+    -hits: int
+    -original_hits: int
+    -dmg: int
+    -previous_hit: ArrayList<Enemy>
+    -col: Color
+    +move()
+    +hit()
+    +hasHit()
+    +isOffscreen()
+    +draw()
+    
+}
+PhysicalObject *--  Bullet   
+
+' Player and dependencies
+interface Ship {
+    +shoot()
+}
+hide Ship fields
+
+class Player {
+    {static} +PLAYER_SPEED: int
+    {static} +PLAYER_FOCUS_SPEED: int
+    -lives: int
+    -focus: boolean 
+    -shooting: boolean 
+    +shoot()
+    +move()
+    +focus()
+    +unfocus()
+    +hit()
+    +draw()
+}
+PhysicalObject  *--     Player  
+Ship            <|..    Player  
+
+' Enemy and dependencies
+class Enemy {
+    -shots_per_second: double
+    -FRAMES_PER_SHOT: int
+    -frames_until_next: int
+    -lives: int
+    -dmg: int
+    +shoot()
+    +hit()
+    +isOffscreen()
+    +draw()
+}
+PhysicalObject  *--     Enemy   
+Ship            <|..    Enemy   
+
+' UserPanel and dependencies
+class EnemySpawner {
+    -start_ns: long
+    -frame_count: long
+    -frames_until_spawn: int
+    -last_val: double
+    +spawn()
+}
+
+interface JavaArcade {
+    +running()
+    +startGame()
+    +getGameName()
+    +pauseGame()
+    +getInstructions()
+    +getCredits()
+    +getHighScore()
+    +stopGame()
+    +getPoints()
+    +setDisplay()
+    +addPlayerBullets()
+}
+hide JavaArcade fields
+
+class UserPanel {
+    -player: Player
+    -score: int
+    -coins: int
+    -timer: Timer
+    -enemies: ArrayList<Enemy>
+    -player_bullets: Set<Bullet>
+    +addPlayerBullets()
+    +paintComponent()
+}
+JavaArcade      <|..    UserPanel   
+Player          o--     UserPanel   
+Bullet          o--     UserPanel   
+EnemySpawner    o--     UserPanel  
+
+' GameStats and dependencies
+class GameStats {
+    -gameNameText: JTextField
+    -currentHighScorer: JTextField
+    -currentHighScore: JTextField
+    -current_Score: JTextField
+    -yourScoreText: JLabel
+    -getHighScore: JLabel
+    -lives: JLabel
+    -points: JLabel
+    +gameOver()
+}
+
+' ControlPanel and dependencies
+class ControlPanel {
+    -game: JavaArcade
+    -stats: GameStats
+    -buttons: JButton
+    +actionPerformed()
+}
+JavaArcade      o--     ControlPanel
+
+' Towhoe and dependencies
+class Towhoe {
+    +{static} GAME_WIDTH: int
+    +{static} GAME HEIGHT: int
+    +{static} window: Towhoe
+    -game JavaArcade
+    -display: GameStats
+    -controls: ControlPanel
+    +getGame()
+}  
+UserPanel       o--     Towhoe      
+GameStats       o--     Towhoe      
+ControlPanel    o--     Towhoe      
+note left       : the one that runs
+
+@enduml
