@@ -31,15 +31,24 @@ abstract PhysicalObject {
     {abstract} +move()
     {abstract} +updXVelocity()
     {abstract} +updYVelocity()
+    {abstract} +draw()
 }
 Hitbox  o-- PhysicalObject  
 
 ' Bullet and dependencies
 class Bullet {
     -active: boolean
+    -hits: int
+    -original_hits: int
+    -dmg: int
+    -previous_hit: ArrayList<Enemy>
+    -col: Color
     +move()
+    +hit()
+    +hasHit()
     +isOffscreen()
     +draw()
+    
 }
 PhysicalObject *--  Bullet   
 
@@ -53,14 +62,13 @@ class Player {
     {static} +PLAYER_SPEED: int
     {static} +PLAYER_FOCUS_SPEED: int
     -lives: int
-    -pLevel: int
-    -xp: int
     -focus: boolean 
     -shooting: boolean 
     +shoot()
     +move()
     +focus()
     +unfocus()
+    +hit()
     +draw()
 }
 PhysicalObject  *--     Player  
@@ -68,7 +76,15 @@ Ship            <|..    Player
 
 ' Enemy and dependencies
 class Enemy {
+    -shots_per_second: double
+    -FRAMES_PER_SHOT: int
+    -frames_until_next: int
+    -lives: int
+    -dmg: int
     +shoot()
+    +hit()
+    +isOffscreen()
+    +draw()
 }
 PhysicalObject  *--     Enemy   
 Ship            <|..    Enemy   
@@ -105,6 +121,10 @@ class JPanel
 hide JPanel fields
 hide JPanel methods
 
+class JLabel
+hide JLabel fields
+hide JLabel methods
+
 class UserPanel {
     -player: Player
     -score: int
@@ -119,21 +139,40 @@ KeyListener     <|..    UserPanel
 ActionListener  <|..    UserPanel   
 JavaArcade      <|..    UserPanel   
 JPanel          *--     UserPanel   
-Player "1"      o--     UserPanel   
-Bullet "many"   o--     UserPanel   
+Player          o--     UserPanel   
+Bullet          o--     UserPanel   
+JLabel          o--     UserPanel   
 
 ' GameStats and dependencies
 class GameStats {
-    ' TODO
+    -gameNameText: JTextField
+    -currentHighScorer: JTextField
+    -currentHighScore: JTextField
+    -current_Score: JTextField
+    -yourScoreText: JLabel
+    -getHighScore: JLabel
+    -lives: JLabel
+    -points: JLabel
+    +gameOver()
 }
 JPanel          *--     GameStats   
+JLabel          o--     GameStats  
+
+class JButton
+hide JButton fields
+hide JButton methods
 
 ' ControlPanel and dependencies
 class ControlPanel {
-    ' TOODO
+    -game: JavaArcade
+    -stats: GameStats
+    -buttons: JButton
+    +actionPerformed()
 }
 ActionListener  <|..    ControlPanel   
-JPanel          *--     ControlPanel   
+JPanel          *--     ControlPanel
+JavaArcade      o--     ControlPanel
+JButton         o--     ControlPanel
 
 ' Towhoe and dependencies
 class JFrame
@@ -154,5 +193,13 @@ UserPanel       o--     Towhoe
 GameStats       o--     Towhoe      
 ControlPanel       o--     Towhoe      
 note left           : the one that runs
+
+class EnemySpawner {
+    -start_ns: long
+    -frame_count: long
+    -frames_until_spawn: int
+    -last_val: double
+    +spawn()
+}
 
 @enduml

@@ -43,16 +43,4 @@ public class EnemySpawner {
 	public double getVal() {
 		return last_val;
 	}
-	public static void main(String[] args) {
-		EnemySpawner j = new EnemySpawner();
-		for (int i=0;i<2e9;i++) {
-			j.spawn();
-			for (int k=0;k<1e6;k++) {
-				continue;
-			}
-		}
-	}
-
-	
-
 }
