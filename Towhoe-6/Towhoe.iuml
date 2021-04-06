@@ -90,6 +90,14 @@ PhysicalObject  *--     Enemy
 Ship            <|..    Enemy   
 
 ' UserPanel and dependencies
+class EnemySpawner {
+    -start_ns: long
+    -frame_count: long
+    -frames_until_spawn: int
+    -last_val: double
+    +spawn()
+}
+
 interface JavaArcade {
     +running()
     +startGame()
@@ -141,7 +149,8 @@ JavaArcade      <|..    UserPanel
 JPanel          *--     UserPanel   
 Player          o--     UserPanel   
 Bullet          o--     UserPanel   
-JLabel          o--     UserPanel   
+JLabel          o--     UserPanel 
+EnemySpawner    o--     UserPanel  
 
 ' GameStats and dependencies
 class GameStats {
@@ -191,15 +200,7 @@ class Towhoe {
 JFrame          *--     Towhoe      
 UserPanel       o--     Towhoe      
 GameStats       o--     Towhoe      
-ControlPanel       o--     Towhoe      
-note left           : the one that runs
-
-class EnemySpawner {
-    -start_ns: long
-    -frame_count: long
-    -frames_until_spawn: int
-    -last_val: double
-    +spawn()
-}
+ControlPanel    o--     Towhoe      
+note left       : the one that runs
 
 @enduml
