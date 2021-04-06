@@ -11,6 +11,8 @@ Aggregation o--
 Class01 *-- "many" Class02 
 
 @startuml Towhoe 6
+skinparam backgroundcolor transparent
+
 scale 2
 note "Mutators and accessors are omitted\nbecause we like having space\n\nOverridden methods and additional\nfields are shown in subclasses\nwhile others are not" as N1
 ' Hitbox and dependencies
