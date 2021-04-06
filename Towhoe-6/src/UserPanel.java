@@ -115,7 +115,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		// spawn enemies
 		int to_spawn = spawner.spawn();
 		for (int i=0;i<to_spawn;i++) 
-			spawnEnemy(1); // probably can do randomizer here bc i don't want to implement waves or something
+			spawnEnemy((int)(Math.random()*10));
 		if (to_spawn>0) {
 			System.out.println(enemies.size());
 		}
@@ -159,6 +159,24 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 				}
 			}
 		}
+		
+		for(Enemy n : enemies) { 
+			if (n.isActive() && n instanceof EnemyV1) {
+				if (n.intersect(player)) {
+					// probably an invulnerable period
+					int player_state = player.hit();
+					if (player_state==-1) {
+						// game over
+						stopGame();
+						// DO SOMETHING
+					}
+					if (player_state==1) {
+						// returns true if it is past 1s, which is where player is invulnerable
+						gStats.updateLives(player.getLives());
+					}
+				}
+			}
+		}
 
 
 		repaint();
@@ -182,6 +200,9 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	}
 	public void spawnEnemy(int type) {
 		switch(type) {
+			case 1:
+				enemies.add(new EnemyV1());
+				break;
 			default:
 				// spawn a default enemy with random x at top of screen
 				enemies.add(new Enemy((int)(Math.random()*500), 0, 0, 2, 7, 4, 1));
