@@ -14,7 +14,6 @@ public abstract class PhysicalObject {
 
 	public PhysicalObject() {
 		// no params spawn in at 0,0 with [0,0]
-		// TODO spawn at a good spot
 		xVel = yVel = 0; // fun
 		hitbox = new Hitbox(0,0,0,false);
 	}

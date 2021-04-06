@@ -3,7 +3,6 @@ all enemies will be some descendant of the enemy object so we can ensure the pla
 author: all of us
 date: today
 */
-// TODO THIS CLASS IS SO USEFUL RIGHT NOW
 import java.awt.*;
 import java.util.ArrayList;
 public class Enemy extends PhysicalObject implements Ship  {
@@ -38,7 +37,7 @@ public class Enemy extends PhysicalObject implements Ship  {
 			frames_until_next = FRAMES_PER_SHOT;
 			ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 			// generate random number 0-4
-			// if number == 4 then influence the bullet towards player
+			// if number == 4 then influence the bullet towards player 
 			if ((int) (Math.random()*5)==4 && ((UserPanel) Towhoe.window.getGame()).getPlayerY() > super.getY()){
 				int dx = super.getX()-((UserPanel) Towhoe.window.getGame()).getPlayerX();
 				int dy = super.getY()-((UserPanel) Towhoe.window.getGame()).getPlayerY();

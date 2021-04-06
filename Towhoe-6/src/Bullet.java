@@ -15,6 +15,7 @@ public class Bullet extends PhysicalObject {
 	private ArrayList<Enemy> previous_hit;
 	private Color col;
 
+	// because why make bullets abstract when you can just have 2 constructors !!! epic time save !!!!!!
 	public Bullet(int x, int y, int xVel, int yVel, int r) {
 		super(x, y, xVel, yVel, r);
 		previous_hit = new ArrayList<Enemy>(hits);
@@ -24,7 +25,7 @@ public class Bullet extends PhysicalObject {
 		super(x,y,xVel,yVel,r);
 		original_hits=hits;
 		previous_hit = new ArrayList<Enemy>(hits); 
-		dmg = dmg;
+		this.dmg = dmg;
 		col = Color.BLUE;
 	}
 	public Bullet(Bullet o) { // what okay
@@ -68,12 +69,16 @@ public class Bullet extends PhysicalObject {
 		previous_hit.add(e);
 		if (hits<=0) super.setActive(false);
 	}
+
 	public int getDmg() {
 		return dmg;
 	}
+
 	private boolean isOffscreen() {
 		return super.getY() < 0 || super.getY() > Towhoe.window.getBorderHeight() || super.getX() < 0 || super.getX() > Towhoe.window.getBorderWidth(); // i hate how boolean doesnt actually equal 1 is so annoying
 		/*
+		BAD RANT PLEASE IGNORE
+
 		map of return super.getY()<0 || super.getY()>Towhoe.window.getBorderHeight() || super.getX()<0 || super.getX()>Towhoe.window.getBorderWidth(); 
 
 		if(super.getY()<0)
@@ -92,8 +97,8 @@ public class Bullet extends PhysicalObject {
 
 		return (super.getY()<0 + super.getY()>Towhoe.window.getBorderHeight() + super.getX()<0 + super.getX()>Towhoe.window.getBorderWidth()) > 0;
 		cpu can preload all this code and do it in advance before you actually come to it and is faster despite more calculations per run
-		TOO BAD THIS DOESNT WORK CAUSE JAVA IS STUPID AND BOOLEANS DO NOT EQUAL ONE AS WELL
-		this approach is a lot of times good for much larger branches of code and i really want to find somewhere i can implement this
+		TOO BAD THIS DOESNT WORK CAUSE JAVA IS STUPID AND BOOLEANS DO NOT EQUAL ONE AS WELL and i dont want to cast them or whatever
+		this approach is a lot of times good for much larger branches of code and i really want to find somewhere i can implement this just for fun
 		*/
 	}
 }

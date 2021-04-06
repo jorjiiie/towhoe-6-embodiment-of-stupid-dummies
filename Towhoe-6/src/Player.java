@@ -7,14 +7,12 @@ import java.util.ArrayList;
 import java.awt.*;
 
 public class Player extends PhysicalObject implements Ship {
-	// TODO find comfortable values for these speeds (rip them from touhou ,, use marisa stats probably)
+	// TODO find comfortable values for these speeds
 	public static final int PLAYER_SPEED = 5; // pixels/frame or pixels/sec if its too fast but i think it's ok
-	public static final int PLAYER_FOCUS_SPEED = 1; // same as speed but separate speed for focus mode
+	public static final int PLAYER_FOCUS_SPEED = 2; // same as speed but separate speed for focus mode
 
 	public static final int PLAYER_RADIUS = 7;
-	private int lives = 50; // TODO turn into coin maybe
-	private int pLevel = 0; // TODO add this to how shoot works
-	private int xp = 0; // TODO add this when item collision or osmething asdlkajsdl
+	private int lives = 3;
 	private boolean focus, shooting;
 	// can the player be hit
 	private int invicible_frames;
@@ -34,9 +32,10 @@ public class Player extends PhysicalObject implements Ship {
 			// 200ms delay
 
 			// TO DO - convert to frames so pausing is only dependent on one thing
-			if (System.nanoTime()-last_shot>=200000000){
+			if (System.nanoTime()-last_shot>=200000000){ // NANO TIME !!
 				
 				ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+				// this is fun stuff
 				bullets.add(new Bullet(super.getX()+super.getRadius()-2,super.getY()+super.getRadius()-2, 0, -10, 2));
 				bullets.add(new Bullet(super.getX()+super.getRadius()-4,super.getY()+super.getRadius()-4, 5, -9, 5,6,4));
 				bullets.add(new Bullet(super.getX()+super.getRadius()-4,super.getY()+super.getRadius()-4, -5, -9, 5,6,4));
@@ -84,7 +83,7 @@ public class Player extends PhysicalObject implements Ship {
 	}
 
 	public void move() {
-		super.setX(super.clamp(super.getX() + getXVelocity(), 0, Towhoe.window.getBorderWidth())); // TODO fix game borders
+		super.setX(super.clamp(super.getX() + getXVelocity(), 0, Towhoe.window.getBorderWidth()));
 		super.setY(super.clamp(super.getY() + getYVelocity(), 0, Towhoe.window.getBorderHeight()));
 	}
 

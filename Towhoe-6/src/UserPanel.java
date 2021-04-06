@@ -23,6 +23,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	public static final int FRAMERATE = 60;
 	private Player player; // player
 	private int score, coins; // score, 1 coin = 1 life
+	private JLabel text;
 
 	private static int DEBUG_MODE = 1;
 
@@ -64,7 +65,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		Color background = Color.black; // fallback, image bg pls
 		score = 0;
 
-		player = new Player(width / 2, height / 2); // TODO add/fix args pls
+		player = new Player(width, height); // THIS WAS /2 for some reason but now its not 
 
 		timer = new javax.swing.Timer(1000/FRAMERATE, this); // 16 ms per frame frame rate = ~60, this will stutter a lot noticeably but who cares
 
@@ -80,6 +81,15 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		enemy_bullets = new HashSet<Bullet>();
 		enemies = new HashSet<Enemy>();
 		spawner = new EnemySpawner();
+
+		// text sutff
+		text = new JLabel("Press Start to Begin"); // HARDCODED LANGUAGE AWW YEAH
+		text.setFont(new Font("Arial", 1, 20));
+		text.setForeground(Color.RED);
+		text.setHorizontalAlignment(JLabel.CENTER);
+		text.setVerticalAlignment(JLabel.CENTER);
+		this.add(text);
+		text.setVisible(true);
 	}
 
 	public void addPlayerBullets(Bullet b) {
@@ -265,13 +275,9 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		case KeyEvent.VK_SHIFT: // focus mode
 			player.focus();
 			break;
-
-		case KeyEvent.VK_ENTER:
-			// TODO start the game i guess
-			break;
 		case KeyEvent.VK_U:
 			if (DEBUG_MODE>0) spawnEnemy(1);
-		default: // TODO is this needed
+		default:
 		}
 	}
 
@@ -298,12 +304,15 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 		if (background_image!=null) draw_background(g2d);
 		
-		// TODO ryan explain this to me pls + maybe find a better way
-		// theo this is the best way, its (expected) constant access + remove + add
+		// TODO ryan explain this to me pls
+		// its (expected) constant access + remove + add
+		// fun
+
 
 		// drawing bullets, if something is inactive, then it will get removed and not be drawn
 
 		// essentially a for each loop but has the iterator go back if something is removed
+		// this is hell why would you do this to yourself
 		for (Iterator<Bullet> i = player_bullets.iterator(); i.hasNext();) {
 			Bullet b = i.next();
 			if (b.isActive()) {
@@ -345,30 +354,17 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		return player.getY();
 	}
 	// TODO FIGURE OUT WTF TO DO WITH THIS
-	private void checkStats() { // called every 5ms, checks status of targets and hero
-
-		// Set the width in case the panel gets resized. All enemies share this value,
-		// therefore it is
-		// static and its corresponding static method is called using the class name.
-
-		// Enemy.setPanelWidth(getWidth());
-		// enemyFast.move();
-		// enemySlow.move();
+	private void checkStats() {
+		// YUP THIS IS VERY MUCH METHOD USED GOOD !!
 	}
 
-	// TODO wtf is this
 	public boolean running() {
 		return running;
 	}
 
-	/*
-	 * This method shorunninguld start your game, it should also set a global boolean value
-	 * so that your  method can return the appropriate value
-	 */
-
 	public void startGame() {
-		// start = true; // i hav eno clue
 		if (done) return; // cannot start again! 
+		text.setVisible(false);
 		running = true;
 	}
 
@@ -384,8 +380,9 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	 */
 	public void pauseGame() {
 		if (done) return;
+		text.setText("PAUSED");
+		text.setVisible(true);
 		running = false;
-
 		return;
 	}
 
@@ -397,7 +394,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	/* This method should return the author(s) of the game */
 
 	public String getCredits() {
-		return "Ryan - carrying the group\nTheo - doing something I dunno\nEric - hopefully actually in the group";
+		return "Ryan - carrying the group\nTheo - doing something I dunno\nEric - also in the group";
 	}
 
 	/* This method should return the highest score played for this game */

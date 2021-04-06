@@ -11,13 +11,13 @@ import javax.swing.border.EmptyBorder;
 
 public class Towhoe extends JFrame {
     // IMPORTANT FINALS
-    public static Towhoe window = new Towhoe(); // TODO this is retarded
-    private JavaArcade game; // THIS IS HERE SO I CAN MAKE A METHOD TO RETURN THIS MF
+    public static Towhoe window = new Towhoe(); // TODO this is really dumb
+    private JavaArcade game; // THIS IS HERE SO I CAN MAKE A METHOD TO RETURN THIS MF I KNOW ITS STUPID BUT AT THIS POINT I DO NOT CARE
 
     public Towhoe() {
         super("Towhoe 6: Embodiment of Stupid Dummies");
 
-        game = new UserPanel(0, 0); // values of this dont matter
+        game = new UserPanel(293,300); // inputs to this are where player spawns. Yes you can resize windows and stuff as you wish HOWEVER on the initial spawn the window will always be the same size so we can make this a number and not care
 
         GameStats display = new GameStats(game);
 
@@ -36,26 +36,26 @@ public class Towhoe extends JFrame {
         c.add(panel, BorderLayout.CENTER);
     }
 
-        public static void main(String[] args) {
-            window.setBounds(100, 100, 600, 600);
-            window.setDefaultCloseOperation(EXIT_ON_CLOSE);
-            //window.setResizable(false); // THIS ONE IS IMPORTANT
-            window.setVisible(true);
-        }
-
-        // TODO this is retarded
-        public JavaArcade getGame() {
+    // TODO this is a really dumb way to do it but who cares
+    public JavaArcade getGame() {
         return game;
     }
 
     // Absolute hack
-    // causes game to freeze when resized too small (41x161) but nobody will play like that anyways
-    // values are border size x 2 + character diameter
+    // causes game to freeze when resized too small (41x194) but nobody will play like that anyways
+    // values are border size x 2 + character diameter but for some reason the borderheight changed so its 194 now.
     public int getBorderWidth() {
         return super.getWidth() - 41;
     }
 
     public int getBorderHeight() {
-        return super.getHeight() - 161;
+        return super.getHeight() - 194; // i have no idea why this changed but it did so /shrug
+    }
+
+    public static void main(String[] args) {
+        window.setBounds(100, 100, 600, 600);
+        window.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //window.setResizable(false); // THIS ONE IS (no longer) IMPORTANT
+        window.setVisible(true);
     }
 }

@@ -8,8 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JButton;
-import java.awt.Component; // TODO is this used or needed
-import java.awt.Container;
 import javax.swing.Box;
 import javax.swing.*;
 
@@ -26,7 +24,7 @@ public class ControlPanel extends JPanel implements ActionListener {
         instructionsButton = new JButton("Instructions");
         instructionsButton.addActionListener(this);
         add(instructionsButton);
-        add(Box.createHorizontalStrut(80));
+        add(Box.createHorizontalStrut(50)); // this will have to do /shrug
         startButton = new JButton("Start");
         startButton.addActionListener(this);
 
@@ -38,7 +36,7 @@ public class ControlPanel extends JPanel implements ActionListener {
         stopButton = new JButton("Stop");
         stopButton.addActionListener(this);
         add(stopButton);
-        add(Box.createHorizontalStrut(80));
+        add(Box.createHorizontalStrut(50));
         creditsButton = new JButton("Credits");
         creditsButton.addActionListener(this);
         add(creditsButton);
@@ -50,7 +48,8 @@ public class ControlPanel extends JPanel implements ActionListener {
 
         JButton button = (JButton) e.getSource();
 
-        // TODO fix this else if chain for being shit
+        // TODO fix this else if chain for being bad
+        // else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if else if 
         if (button == startButton) {
 
             if (!game.running()) {
@@ -80,14 +79,13 @@ public class ControlPanel extends JPanel implements ActionListener {
         else if (button == creditsButton) {
             String credits = game.getCredits();
             JOptionPane.showMessageDialog(this, credits, "Game Credits", JOptionPane.PLAIN_MESSAGE);
-
         }
         else if (button == instructionsButton) {
             String instructions = game.getInstructions();
             JOptionPane.showMessageDialog(this, instructions, "Game Rules", JOptionPane.PLAIN_MESSAGE);
 
         }
-        ((JPanel) (game)).requestFocus();
+        ((JPanel) (game)).requestFocus(); // this is hell
     }
 
 }
