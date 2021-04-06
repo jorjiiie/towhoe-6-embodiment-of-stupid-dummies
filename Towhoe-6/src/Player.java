@@ -17,7 +17,7 @@ public class Player extends PhysicalObject implements Ship {
 	private int xp = 0; // TODO add this when item collision or osmething asdlkajsdl
 	private boolean focus, shooting;
 	// can the player be hit
-	private boolean can_hit = true; 
+	private int invicible_frames;
 
 	private long last_shot, last_hit;
 	public Player(int x, int y) {
@@ -37,9 +37,9 @@ public class Player extends PhysicalObject implements Ship {
 			if (System.nanoTime()-last_shot>=200000000){
 				
 				ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-				bullets.add(new Bullet(super.getX()+super.getRadius()/2-2, super.getY()+super.getRadius()/2, 0, -10, 2));
-				bullets.add(new Bullet(super.getX()+super.getRadius()/2-4,super.getY()+super.getRadius()/2-4, 5, -9, 5,6,4));
-				bullets.add(new Bullet(super.getX()+super.getRadius()/2-4,super.getY()+super.getRadius()/2-4, -5, -9, 5,6,4));
+				bullets.add(new Bullet(super.getX()+super.getRadius()-2,super.getY()+super.getRadius()-2, 0, -10, 2));
+				bullets.add(new Bullet(super.getX()+super.getRadius()-4,super.getY()+super.getRadius()-4, 5, -9, 5,6,4));
+				bullets.add(new Bullet(super.getX()+super.getRadius()-4,super.getY()+super.getRadius()-4, -5, -9, 5,6,4));
 				last_shot = System.nanoTime();
 				return bullets;
 
@@ -101,16 +101,15 @@ public class Player extends PhysicalObject implements Ship {
 		super.setYVelocity((int) (getYVelocity() * (PLAYER_SPEED / PLAYER_FOCUS_SPEED * 1.0)));
 		focus = false;
 	}
-
 	public void draw(Graphics g) {
 
-		if (System.nanoTime()-last_hit>=1000000000) {
-			can_hit=true;
+		if (invicible_frames<=0) {
 			if (focus) g.setColor(Color.BLUE);
 			else g.setColor(Color.RED);
 
 		} else {
 			// add yellow tint? (idk lol can change later)
+			invicible_frames--;
 			if (focus) g.setColor(Color.YELLOW);
 			else g.setColor(Color.ORANGE);
 		}
@@ -120,12 +119,11 @@ public class Player extends PhysicalObject implements Ship {
 	}
 	public int hit() {
 		// hit by enemy bullet
-		if (System.nanoTime()-last_hit<1000000000) {
-			return 0;
-		}
-		can_hit=true;
-		last_hit = System.nanoTime();
+		if (invicible_frames>0) return 0;
+
 		lives--;
+
+		invicible_frames = UserPanel.FRAMERATE;
 		if (lives==0) {
 			// GAME OVER... how to do this? 
 			return -1;
