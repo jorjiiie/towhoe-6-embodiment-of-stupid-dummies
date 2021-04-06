@@ -6,7 +6,7 @@ date: today
 import java.util.ArrayList;
 import java.awt.*;
 
-public class Player extends PhysicalObject implements Ship {
+public class Player extends PhysicalObject implements Ship { // THERES SOME POLYMORPHISM THERE 
 	// TODO find comfortable values for these speeds
 	public static final int PLAYER_SPEED = 5; // pixels/frame or pixels/sec if its too fast but i think it's ok
 	public static final int PLAYER_FOCUS_SPEED = 2; // same as speed but separate speed for focus mode

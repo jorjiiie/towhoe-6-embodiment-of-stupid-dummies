@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.Box;
 import javax.swing.*;
 
-public class ControlPanel extends JPanel implements ActionListener {
+public class ControlPanel extends JPanel implements ActionListener { // THERES SOME POLYMORPHISM THERE
     private JavaArcade game;
     private GameStats gStats;
     private JButton startButton, pauseButton, stopButton, instructionsButton, creditsButton;

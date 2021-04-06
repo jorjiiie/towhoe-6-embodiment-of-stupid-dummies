@@ -5,7 +5,7 @@ date: today
 */
 import java.awt.*;
 import java.util.ArrayList;
-public class Enemy extends PhysicalObject implements Ship  {
+public class Enemy extends PhysicalObject implements Ship  { // THERES SOME POLYMORPHISM THERE 
 
 	private double shots_per_second;
 	private int FRAMES_PER_SHOT;
@@ -44,12 +44,12 @@ public class Enemy extends PhysicalObject implements Ship  {
 				// scale down [dx,dy] vector magnitude 5 (roughly)
 				double len = Math.sqrt(dx*dx+dy*dy);
 				double scale_factor = 5/len;
-				dx = (int) (scale_factor*dx+.5)/2;
-				dy = (int) (scale_factor*dy+.5)/2;
+				dx = (int) (scale_factor*dx+.5);
+				dy = (int) (scale_factor*dy+.5);
 
 				bullets.add(new Bullet(super.getX()+super.getRadius()-2,super.getY()+super.getRadius()-2,-dx,-dy,2));
 			}
-			else bullets.add(new Bullet(super.getX()+super.getRadius()-2, super.getY()+super.getRadius()-2, 0, 3, 2));
+			else bullets.add(new Bullet(super.getX()+super.getRadius()-2, super.getY()+super.getRadius()-2, (int)(Math.random()*3-1), 3, 2));
 			return bullets;
 		}
 		return null;

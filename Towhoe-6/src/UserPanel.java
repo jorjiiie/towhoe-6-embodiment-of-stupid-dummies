@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Iterator;
 
-public class UserPanel extends JPanel implements KeyListener, ActionListener, JavaArcade {
+public class UserPanel extends JPanel implements KeyListener, ActionListener, JavaArcade { // THERES SOME POLYMORPHISM THERE 
 
 	public static final String filePath = System.getProperty("java.class.path");
 	public static final int FRAMERATE = 60;
@@ -218,7 +218,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 				break;
 			default:
 				// spawn a default enemy with random x at top of screen
-				enemies.add(new Enemy((int)(Math.random()*500), 0, 0, 2, 7, 4, 1));
+				enemies.add(new Enemy((int)(Math.random()*Towhoe.window.getBorderWidth()), (int)(Math.random()*6), (int)(Math.random()*3)-1, 2, 7, 4, 1));
 		}
 		
 	}
