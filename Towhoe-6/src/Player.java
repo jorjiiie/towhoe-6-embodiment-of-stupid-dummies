@@ -6,7 +6,7 @@ date: today
 import java.util.ArrayList;
 import java.awt.*;
 
-public class Player extends PhysicalObject implements Ship {
+public class Player extends PhysicalObject implements Ship { // THERES SOME POLYMORPHISM THERE 
 	// TODO find comfortable values for these speeds
 	public static final int PLAYER_SPEED = 5; // pixels/frame or pixels/sec if its too fast but i think it's ok
 	public static final int PLAYER_FOCUS_SPEED = 2; // same as speed but separate speed for focus mode
@@ -36,9 +36,9 @@ public class Player extends PhysicalObject implements Ship {
 				
 				ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 				// this is fun stuff
-				bullets.add(new Bullet(super.getX()+super.getRadius()-2,super.getY()+super.getRadius()-2, 0, -10, 2));
-				bullets.add(new Bullet(super.getX()+super.getRadius()-4,super.getY()+super.getRadius()-4, 5, -9, 5,6,4));
-				bullets.add(new Bullet(super.getX()+super.getRadius()-4,super.getY()+super.getRadius()-4, -5, -9, 5,6,4));
+				bullets.add(new Bullet(super.getX()+super.getRadius()-4,super.getY()+super.getRadius()-2, 0, -10, 4));
+				bullets.add(new Bullet(super.getX()+super.getRadius()-2,super.getY()+super.getRadius()-4, focus ? 2 : 5, -9, 2,6,2));
+				bullets.add(new Bullet(super.getX()+super.getRadius()-2,super.getY()+super.getRadius()-4, focus ? -2 : -5, -9, 3,6,2));
 				last_shot = System.nanoTime();
 				return bullets;
 

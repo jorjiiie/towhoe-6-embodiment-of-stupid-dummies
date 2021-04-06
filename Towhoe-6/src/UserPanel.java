@@ -19,7 +19,7 @@ import java.util.Set;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class UserPanel extends JPanel implements KeyListener, ActionListener, JavaArcade {
+public class UserPanel extends JPanel implements KeyListener, ActionListener, JavaArcade { // THERES SOME POLYMORPHISM THERE 
 
 	public static final String filePath = System.getProperty("java.class.path");
 	public static final int FRAMERATE = 60;
@@ -179,6 +179,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 				if (player_state==-1) {
 					gStats.updateLives(player.getLives());
 					// game over
+					text.setText("GAME OVER");
+					text.setVisible(true);
 					stopGame();
 					// DO SOMETHING
 				}
@@ -236,7 +238,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 				break;
 			default:
 				// spawn a default enemy with random x at top of screen
-				enemies.add(new Enemy((int)(Math.random()*500), 0, 0, 2, 7, 4, 1));
+				enemies.add(new Enemy((int)(Math.random()*Towhoe.window.getBorderWidth()), (int)(Math.random()*6), (int)(Math.random()*3)-1, 2, 7, 4, 1));
 		}
 		
 	}
@@ -337,7 +339,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		for (Iterator<Bullet> i = player_bullets.iterator(); i.hasNext();) {
 			Bullet b = i.next();
 			if (b.isActive()) {
-				// drawing before move means that on the next frame, the calculations will match the drawn (x,y) of the thing
+				// drawing before move means that on the next frame,
+				// the calculations will match the drawn (x,y) of the thing
 				b.draw(g2d);
 				b.move();
 			}
@@ -374,6 +377,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	public int getPlayerY() {
 		return player.getY();
 	}
+
+	
 	// TODO FIGURE OUT WTF TO DO WITH THIS
 	private void checkStats() {
 		// YUP THIS IS VERY MUCH METHOD USED GOOD !!

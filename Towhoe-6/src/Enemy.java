@@ -5,7 +5,7 @@ date: today
 */
 import java.awt.*;
 import java.util.ArrayList;
-public class Enemy extends PhysicalObject implements Ship  {
+public class Enemy extends PhysicalObject implements Ship  { // THERES SOME POLYMORPHISM THERE 
 
 	private double shots_per_second;
 	private int FRAMES_PER_SHOT;
@@ -38,7 +38,7 @@ public class Enemy extends PhysicalObject implements Ship  {
 			ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 			// generate random number 0-4
 			// if number == 4 then influence the bullet towards player 
-			if ((int) (Math.random()*5)==4 && ((UserPanel) Towhoe.window.getGame()).getPlayerY() > super.getY()){
+			if ((int) (Math.random()*4)==3 && ((UserPanel) Towhoe.window.getGame()).getPlayerY() > super.getY()){
 				int dx = super.getX()-((UserPanel) Towhoe.window.getGame()).getPlayerX();
 				int dy = super.getY()-((UserPanel) Towhoe.window.getGame()).getPlayerY();
 				// scale down [dx,dy] vector magnitude 5 (roughly)
@@ -49,7 +49,7 @@ public class Enemy extends PhysicalObject implements Ship  {
 
 				bullets.add(new Bullet(super.getX()+super.getRadius()-2,super.getY()+super.getRadius()-2,-dx,-dy,2));
 			}
-			else bullets.add(new Bullet(super.getX()+super.getRadius()-2, super.getY()+super.getRadius()-2, 0, 4, 2));
+			else bullets.add(new Bullet(super.getX()+super.getRadius()-2, super.getY()+super.getRadius()-2, (int)(Math.random()*3-1), 3, 2));
 			return bullets;
 		}
 		return null;

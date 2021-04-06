@@ -115,26 +115,6 @@ interface JavaArcade {
 }
 hide JavaArcade fields
 
-interface KeyListener{
-    +keyTyped()
-    +keyPressed()
-    +keyReleased()
-}
-hide KeyListener fields
-
-interface ActionListener {
-    +actionPerformed()
-}
-hide ActionListener fields
-
-class JPanel
-hide JPanel fields
-hide JPanel methods
-
-class JLabel
-hide JLabel fields
-hide JLabel methods
-
 class UserPanel {
     -player: Player
     -score: int
@@ -145,13 +125,9 @@ class UserPanel {
     +addPlayerBullets()
     +paintComponent()
 }
-KeyListener     <|..    UserPanel   
-ActionListener  <|..    UserPanel   
 JavaArcade      <|..    UserPanel   
-JPanel          *--     UserPanel   
 Player          o--     UserPanel   
 Bullet          o--     UserPanel   
-JLabel          o--     UserPanel 
 EnemySpawner    o--     UserPanel  
 
 ' GameStats and dependencies
@@ -166,12 +142,6 @@ class GameStats {
     -points: JLabel
     +gameOver()
 }
-JPanel          *--     GameStats   
-JLabel          o--     GameStats  
-
-class JButton
-hide JButton fields
-hide JButton methods
 
 ' ControlPanel and dependencies
 class ControlPanel {
@@ -180,16 +150,9 @@ class ControlPanel {
     -buttons: JButton
     +actionPerformed()
 }
-ActionListener  <|..    ControlPanel   
-JPanel          *--     ControlPanel
 JavaArcade      o--     ControlPanel
-JButton         o--     ControlPanel
 
 ' Towhoe and dependencies
-class JFrame
-hide JFrame fields
-hide JFrame methods
-
 class Towhoe {
     +{static} GAME_WIDTH: int
     +{static} GAME HEIGHT: int
@@ -198,8 +161,7 @@ class Towhoe {
     -display: GameStats
     -controls: ControlPanel
     +getGame()
-}
-JFrame          *--     Towhoe      
+}  
 UserPanel       o--     Towhoe      
 GameStats       o--     Towhoe      
 ControlPanel    o--     Towhoe      
