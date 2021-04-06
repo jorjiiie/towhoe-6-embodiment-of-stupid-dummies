@@ -1,5 +1,5 @@
 import java.awt.*;
-
+//is obstacle
 public class EnemyV1 extends Enemy{
 	public EnemyV1() {
 		super((int)(Math.random()*500),0,0,1,15, 200, 0.001);

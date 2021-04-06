@@ -25,7 +25,7 @@ public class GameStats extends JPanel {
         gName.setForeground(Color.red);
         gName.setFont(gameNameFont);
         add(gName);
-        hScore = new JLabel(" Current High Score: " + t.getHighScore());
+        hScore = new JLabel(" High Score: " + t.getHighScore());
 
         add(hScore); // new JLabel(" Current High Score: " + t.getHighScore()));
 
@@ -47,7 +47,7 @@ public class GameStats extends JPanel {
     }
 
     public void updateHighScore() {
-        hScore.setText(" Current High Score: " + ((UserPanel)game).getHighScore());
+        hScore.setText(" High Score: " + ((UserPanel)game).getHighScore());
     }
     public void update(int points) {
 
@@ -69,7 +69,7 @@ public class GameStats extends JPanel {
             String s = (String) JOptionPane.showInputDialog(this,
                     "You are the new high scorer. Congratulations!\n Enter your name: ", "High Score",
                     JOptionPane.PLAIN_MESSAGE, null, null, "name");
-            hScore.setText(" Current High Score: " + points);
+            hScore.setText(" High Score: " + points);
 
         }
 

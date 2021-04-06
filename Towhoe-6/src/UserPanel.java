@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.util.LinkedList;
@@ -16,6 +17,7 @@ import java.util.Queue;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Iterator;
+import java.util.Scanner;
 
 public class UserPanel extends JPanel implements KeyListener, ActionListener, JavaArcade {
 
@@ -51,7 +53,24 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	private boolean running = false,done=false;
 
 	// THE BIG OL CONSTRUCTOR
+
 	public UserPanel(int width, int height) {
+		try {
+		      File highScore = new File("highscores.txt");
+		      if (highScore.createNewFile()) {
+		        System.out.println("File created: " + highScore.getName());
+		      } else {
+		    	   Scanner myReader = new Scanner(highScore);
+		    	   if (myReader.hasNext()) {
+		    		   high_score = Math.max(high_score,Integer.parseInt(myReader.nextLine()));
+		    		   System.out.println(high_score);
+		    	   }
+		    	   System.out.println("File already exists.");
+		      }
+		    } catch (IOException e) {
+		      System.out.println("error");
+		      e.printStackTrace();
+		    }
 		try {
 			background_image = ImageIO.read(new File(filePath+"/img/texture3.jpg"));
 			img1Y=0;
@@ -158,6 +177,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 				// probably an invulnerable period
 				int player_state = player.hit();
 				if (player_state==-1) {
+					gStats.updateLives(player.getLives());
 					// game over
 					stopGame();
 					// DO SOMETHING
@@ -207,7 +227,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 			}
 			System.out.println("PREVIOUS FRAME TOOK " + nanoseconds + " ns, AVERAGE FOR **TEN** FRAMES IS " + getMsPerFrame() + " ns");
 		}
-		System.out.println(Towhoe.window);
+//		System.out.println(Towhoe.window);
 	}
 	public void spawnEnemy(int type) {
 		switch(type) {
@@ -418,6 +438,15 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		running = false;
 		done = true;
 		gStats.updateHighScore();
+		try {
+	      	FileWriter myWriter = new FileWriter("highscores.txt", false);
+	      	myWriter.write(""+high_score);
+	      	myWriter.close();
+	      	System.out.println("Successfully wrote to the file.");
+	    } catch (IOException e) {
+	    	System.out.println("error");
+	      	e.printStackTrace();
+	    }
 		return;
 	}
 
