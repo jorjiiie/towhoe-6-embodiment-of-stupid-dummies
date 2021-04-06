@@ -11,7 +11,7 @@ public class Player extends PhysicalObject implements Ship {
 	public static final int PLAYER_SPEED = 5; // pixels/frame or pixels/sec if its too fast but i think it's ok
 	public static final int PLAYER_FOCUS_SPEED = 1; // same as speed but separate speed for focus mode
 
-	public static final int PLAYER_RADIUS = 15;
+	public static final int PLAYER_RADIUS = 7;
 	private int lives = 50; // TODO turn into coin maybe
 	private int pLevel = 0; // TODO add this to how shoot works
 	private int xp = 0; // TODO add this when item collision or osmething asdlkajsdl
@@ -37,9 +37,9 @@ public class Player extends PhysicalObject implements Ship {
 			if (System.nanoTime()-last_shot>=200000000){
 				
 				ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-				bullets.add(new Bullet(super.getX()+super.getRadius()/2-2, super.getY()+super.getRadius()/2, 0, -10, 5));
-				bullets.add(new Bullet(super.getX()+super.getRadius()/2-4,super.getY()+super.getRadius()/2-4, 5, -9, 10,6,4));
-				bullets.add(new Bullet(super.getX()+super.getRadius()/2-4,super.getY()+super.getRadius()/2-4, -5, -9, 10,6,4));
+				bullets.add(new Bullet(super.getX()+super.getRadius()/2-2, super.getY()+super.getRadius()/2, 0, -10, 2));
+				bullets.add(new Bullet(super.getX()+super.getRadius()/2-4,super.getY()+super.getRadius()/2-4, 5, -9, 5,6,4));
+				bullets.add(new Bullet(super.getX()+super.getRadius()/2-4,super.getY()+super.getRadius()/2-4, -5, -9, 5,6,4));
 				last_shot = System.nanoTime();
 				return bullets;
 
@@ -115,7 +115,7 @@ public class Player extends PhysicalObject implements Ship {
 			else g.setColor(Color.ORANGE);
 		}
 		// System.out.println("profanities lol"); // DEBUG
-		g.fillOval(super.getX(), super.getY(), super.getRadius(), super.getRadius());
+		g.fillOval(super.getX(), super.getY(), super.getRadius()*2, super.getRadius()*2);
 
 	}
 	public int hit() {

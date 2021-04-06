@@ -106,8 +106,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 		// spawn enemies
 		int to_spawn = spawner.spawn();
-		for (int i=0;i<to_spawn;i++) 
-			spawnEnemy(1); // probably can do randomizer here bc i don't want to implement waves or something
+		// for (int i=0;i<to_spawn;i++) 
+			// spawnEnemy(1); // probably can do randomizer here bc i don't want to implement waves or something
 		if (to_spawn>0) {
 			System.out.println(enemies.size());
 		}
@@ -134,6 +134,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		for (Bullet b : enemy_bullets) {
 			if (b.intersect(player)) {
 				// probably an invulnerable period
+				System.out.println(player.getX() + " " + player.getY() + " " + b.getX() + " " + b.getY());
 				int player_state = player.hit();
 				if (player_state==-1) {
 					// game over
@@ -170,7 +171,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		switch(type) {
 			default:
 				// spawn a default enemy with random x at top of screen
-				enemies.add(new Enemy((int)(Math.random()*500), 0, 0, 2, 15, 4, .5));
+				enemies.add(new Enemy((int)(Math.random()*500), 0, 0, 0, 7, 4, 1.5));
 		}
 		
 	}

@@ -19,12 +19,14 @@ public class Hitbox {
 
     public boolean intersect(Hitbox o) {
 		// if distance < sum of radii, then intersect
-		return (this.isActive() && o.isActive()) ? distance(o) < this.radius + o.radius : false;
+		return (this.isActive() && o.isActive()) ? distance(o) < (this.radius + o.radius) : false;
 	}
 
 	private double distance(Hitbox o) { // as of now doesnt need to be a separate method but it could be cool to use it later i guess
 		// distance between two objects
-		return Math.sqrt((this.xPos - o.xPos) * (this.xPos - o.xPos) + (this.yPos - o.yPos) * (this.yPos - o.yPos)); // fun
+        // has to be the center, 
+
+		return Math.sqrt((this.xPos + this.radius - o.xPos - o.radius) * (this.xPos + this.radius - o.xPos - o.radius) + (this.yPos + this.radius - o.yPos - o.radius) * (this.yPos + this.radius - o.yPos - o.radius)); // fun
 	}
 
     // MUTATORS AND ACCESSORS (THE NOT FANCY STUFF)

@@ -15,12 +15,12 @@ public class Enemy extends PhysicalObject implements Ship  {
 	// 'soak' up bullets
 	private int dmg = 2;
 	public Enemy() {
-		super(0,0,0,0,15);
+		super(0,0,0,0,7);
 		lives=1;
 	}
 
 	public Enemy(int x, int y, int xVel, int yVel) {
-		super(x,y,xVel,yVel,15);
+		super(x,y,xVel,yVel,7);
 		lives=4;
 	}
 
@@ -37,7 +37,7 @@ public class Enemy extends PhysicalObject implements Ship  {
 		if (frames_until_next<=0) {
 			frames_until_next = FRAMES_PER_SHOT;
 			ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-			bullets.add(new Bullet(super.getX()+super.getRadius()/2-2, super.getY()+super.getRadius()/2, 0, 5, 5));
+			bullets.add(new Bullet(super.getX(), super.getY(), 0, 1, 5));
 			return bullets;
 		}
 		return null;
@@ -49,7 +49,7 @@ public class Enemy extends PhysicalObject implements Ship  {
 	}
 	public void draw(Graphics g) {
 		g.setColor(Color.GREEN);
-		g.fillOval(super.getX(),super.getY(),super.getRadius(),super.getRadius());
+		g.fillOval(super.getX(),super.getY(),super.getRadius()*2,super.getRadius()*2);
 	}
 
 	public int getDmg() {

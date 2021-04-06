@@ -37,9 +37,9 @@ public class Bullet extends PhysicalObject {
 
 	public void draw(Graphics g) {
 		g.setColor(Color.WHITE);
-		g.fillOval(super.getX()-1,super.getY()-1,super.getRadius()+2,super.getRadius()+2);
+		g.fillOval(super.getX()-1,super.getY()-1,(super.getRadius()+1)*2,(super.getRadius()+1)*2);
 		g.setColor(col);
-		g.fillOval(super.getX(), super.getY(), super.getRadius(), super.getRadius());
+		g.fillOval(super.getX(), super.getY(), (super.getRadius()*2), super.getRadius()*2);
 	}
 	public boolean hasHit(Enemy e) {
 		for (Enemy enemy : previous_hit) {
