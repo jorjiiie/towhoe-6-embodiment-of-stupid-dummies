@@ -60,8 +60,7 @@ public class Bullet extends PhysicalObject {
 
 	public void phit() {
 		// hit player
-		hits--;
-		if (hits==0) super.setActive(false);
+		super.setActive(false);
 	}
 
 	public void hit(Enemy e) {

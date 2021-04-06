@@ -130,4 +130,7 @@ public class Player extends PhysicalObject implements Ship {
 		}
 		return 1;
 	}
+	public int getLives() {
+		return lives;
+	}
 }

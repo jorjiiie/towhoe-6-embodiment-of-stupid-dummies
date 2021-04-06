@@ -17,7 +17,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Iterator;
 
-
 public class UserPanel extends JPanel implements KeyListener, ActionListener, JavaArcade {
 
 	public static final String filePath = System.getProperty("java.class.path");
@@ -43,6 +42,13 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	private int frame_count = 10,current_frames; 
 
 	private EnemySpawner spawner;
+
+	private GameStats gStats;
+
+	private int current_points,high_score;
+
+	private boolean running = false,done=false;
+
 	// THE BIG OL CONSTRUCTOR
 	public UserPanel(int width, int height) {
 		try {
@@ -82,6 +88,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 	public void actionPerformed(ActionEvent e) { // draw those mf frames
 		// checkStats();
+		// battery draine
+		if (!running) return; 
 		long startTime = System.nanoTime();
 
 		ArrayList<Bullet> player_shoot = player.shoot(); // having this as what is basically a persist script is bad for performance but the amount of variable juggling we'd do anyways... its worth it
@@ -124,6 +132,10 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 						}
 						b.hit(k);
 						k.hit(b.getDmg()); // same for if we want to implement health (hit())
+						if (k.isActive()==false) {
+							current_points+=(int) ((spawner.getVal()) * 100) * 100;
+							gStats.updatePoints();
+						}
 						break;
 					}
 
@@ -137,11 +149,13 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 				int player_state = player.hit();
 				if (player_state==-1) {
 					// game over
+					stopGame();
 					// DO SOMETHING
 				}
 				if (player_state==1) {
 					// returns true if it is past 1s, which is where player is invulnerable
 					b.phit();
+					gStats.updateLives(player.getLives());
 				}
 			}
 		}
@@ -170,7 +184,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 		switch(type) {
 			default:
 				// spawn a default enemy with random x at top of screen
-				enemies.add(new Enemy((int)(Math.random()*500), 0, 0, 2, 7, 4, 1.5));
+				enemies.add(new Enemy((int)(Math.random()*500), 0, 0, 2, 7, 4, 1));
 		}
 		
 	}
@@ -323,7 +337,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 	// TODO wtf is this
 	public boolean running() {
-		return true;
+		return running;
 	}
 
 	/*
@@ -333,6 +347,8 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 	public void startGame() {
 		// start = true; // i hav eno clue
+		if (done) return; // cannot start again! 
+		running = true;
 	}
 
 	// Towhoe so pog
@@ -346,6 +362,9 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	 * returned by running method
 	 */
 	public void pauseGame() {
+		if (done) return;
+		running = false;
+
 		return;
 	}
 
@@ -362,7 +381,7 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 
 	/* This method should return the highest score played for this game */
 	public String getHighScore() {
-		return "69420";
+		return (""+high_score);
 	}
 
 	/*
@@ -370,13 +389,20 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	 * boolean value to false
 	 */
 	public void stopGame() {
+		if (current_points>high_score) {
+			// idk if there's congrats but
+			high_score = current_points;
+		}
+		running = false;
+		done = true;
+		gStats.updateHighScore();
 		return;
 	}
 
 	/* This method shoud return the current players number of points */
 
 	public int getPoints() {
-		return 69;
+		return current_points;
 	}
 
 	/*
@@ -385,7 +411,11 @@ public class UserPanel extends JPanel implements KeyListener, ActionListener, Ja
 	 * should be passed to UserPanel (main panel) to update poionts
 	 */
 	public void setDisplay(GameStats d) {
+		gStats = d;
 		return;
+	}
+	public int getPlayerLives() {
+		return player.getLives();
 	}
 
 }
