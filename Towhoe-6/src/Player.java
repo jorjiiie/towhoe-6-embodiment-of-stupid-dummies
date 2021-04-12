@@ -1,6 +1,6 @@
 /*
 the player and its abilities
-author: all of us
+author: Ryan, Theo
 date: today
 */
 import java.util.ArrayList;

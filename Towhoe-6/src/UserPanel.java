@@ -1,6 +1,6 @@
 /*
 the actual game
-author: all of us
+author: Ryan, Theo, Eric
 date: today
 */
 

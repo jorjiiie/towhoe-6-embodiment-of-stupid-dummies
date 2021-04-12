@@ -1,6 +1,6 @@
 /*
 control panel / access panel for the arcade (insert coin etc)
-author: all of us
+author: Ryan, Theo
 date: today
 */
 

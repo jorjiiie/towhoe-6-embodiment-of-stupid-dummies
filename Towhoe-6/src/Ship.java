@@ -1,6 +1,6 @@
 /*
 ship interface used for all ship type objects so we can ensure they work nicely with eachother
-author: all of us
+author: probably irrelevant
 date: today
 */
 import java.awt.*;

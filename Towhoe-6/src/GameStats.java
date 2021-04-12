@@ -1,6 +1,6 @@
 /*
 statistics guis and tracking
-author: all of us
+author: Ryan, Theo, Eric
 date: today
 */
 

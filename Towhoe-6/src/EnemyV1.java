@@ -1,3 +1,7 @@
+/*
+	Different type of enemy
+	Author: Eric
+*/
 import java.awt.*;
 //is obstacle
 public class EnemyV1 extends Enemy{

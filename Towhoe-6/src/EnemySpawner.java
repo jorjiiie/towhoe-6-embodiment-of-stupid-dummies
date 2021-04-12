@@ -1,7 +1,7 @@
 /*
 
-	cancer enemy spawning function
-	TODO: PAUSE (not bad just do a subtract for elapsed time during pause)
+	no bueno enemy spawning function
+	Author: Ryan
 */
 
 public class EnemySpawner {

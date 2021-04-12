@@ -1,6 +1,6 @@
 /*
 the bullet is the thing that shoots other things
-author: all of us
+author: Ryan, Theo
 date: today
 */
 

@@ -1,6 +1,6 @@
 /*
 all enemies will be some descendant of the enemy object so we can ensure the player interacts properly with them
-author: all of us
+author: Ryan, Theo
 date: today
 */
 import java.awt.*;

@@ -1,6 +1,6 @@
 /*
 the thing you run, assembles guis and stuff
-author: all of us
+author: Ryan, Theo
 date: today
 */
 import java.awt.Container;

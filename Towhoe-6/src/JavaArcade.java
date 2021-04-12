@@ -1,6 +1,6 @@
 /*
 has everything the java arcade needs to interface with the other buttons
-author: all of us
+author: Provided
 date: today
 */
 

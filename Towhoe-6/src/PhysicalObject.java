@@ -1,6 +1,6 @@
 /*
 everything capable of interacting with other things will be some descendant of PhysicalObject
-author: all of us
+author: Ryan, Theo
 date: today
 */
 import java.awt.*;

@@ -1,7 +1,7 @@
 /*
 a circular hitbox that can be implemented in many different objects. this has no reason to exist outside of PhysicalObject but who cares
 this is the core of all objects and is how their positions are determined for drawing
-author: all of us
+author: Theo
 date: today
 */
 
